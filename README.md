@@ -1,6 +1,10 @@
 # straPy
 
-Performs bootstrapping of a dataset to produce plots and statistics for use in final reports and documents. 
+## Summary
+
+Performs bootstrapping of a dataset column to produce plots and statistics for use in final reports and documents.
+
+The purpose of this package is to simplify and automate the process of creating simple bootstrap distributions of numerical data columns. The package will have a module which intakes a dataset column and relevant parameters such as the desired confidence bounds and number of simulations. The module will perform the simulation statistics to generate the bootstrap mean distribution and relevant statistics such as the sample mean and bootstrapped confidence interval. The package will also contain a module for visualization of the bootstraped confidence interval, and a module for creating a professional publication-ready table of the relevant statistics.
 
 ## Installation
 
