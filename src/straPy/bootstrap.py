@@ -1,4 +1,3 @@
-
 def bootstrap_distribution(sample, rep, n, estimator="mean"):
     """Bootstraps a sampling distribution for a sample.
 
