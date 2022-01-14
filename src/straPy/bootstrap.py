@@ -1,4 +1,4 @@
-def bootstrap_distribution(sample, rep, n, estimator="mean"):
+def bootstrap_distribution(sample, rep, n="auto", estimator="mean"):
     """Bootstraps a sampling distribution for a sample.
 
     A sampling distribution of `rep` replicates is generated
@@ -11,8 +11,8 @@ def bootstrap_distribution(sample, rep, n, estimator="mean"):
         sample to bootstrap
     rep : int
         number of replicates of the distribution
-    n : int
-        bootstrap sample size
+    n : str or int, default="auto"
+        bootstrap sample size, "auto" specifies using the same size as the sample
     estimator : {"mean", "median", "var", "sd"}
         sampling distributor's estimator
     
