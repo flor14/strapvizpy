@@ -38,7 +38,7 @@ def calculate_boot_ci(dist, level=0.95):
     ----------
     dist : numpy.ndarray
         bootstrapped sampling distribution
-    level : int, default=0.95
+    level : float, default=0.95
         confidence level
     
     Returns
