@@ -151,3 +151,4 @@ def calculate_boot_stats(sample, rep, n="auto", level=0.95, estimator="mean", ra
     stats_dict["sample_sd"] = np.std(sample)
 
     return stats_dict
+    
