@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import warnings
 
 def bootstrap_distribution(sample, rep, n="auto", estimator="mean", random_seed=None):
     """Bootstraps a sampling distribution for a sample.
@@ -82,27 +83,54 @@ def bootstrap_distribution(sample, rep, n="auto", estimator="mean", random_seed=
         axis=1
     )
 
-def calculate_boot_ci(dist, level=0.95):
-    """Calculates a confidence interval for a distribution.
-
-    A confidence interval for the provided sampling distribution
-    `dist` is calculated for a confidence level `level`.
+def calculate_boot_stats(sample, rep, n="auto", level=0.95, random_seed=None):
+    """Calculates a bootstrapped confidence interval for a sample.
+    A bootstrapped confidence interval for the provided sample is
+    calculated for a confidence level `level`. The mean and standard
+    deviation of the sample are also returned.
 
     Parameters
     ----------
-    dist : numpy.ndarray
-        bootstrapped sampling distribution
+    sample : list or numpy.ndarray or pandas.core.series.Series 
+        sample to bootstrap
+    rep : int
+        number of replicates of the distribution
+    n : str or int, default="auto"
+        bootstrap sample size, "auto" specifies using the same size as the sample
+    random_seed : None or int, default=None
+        seed for random state
     level : float, default=0.95
         confidence level
     
     Returns
     -------
-    numpy.ndarray
-        lower and upper bounds of the confidence interval
+    dictionary
+        dictionary containing mean and sd of sample, and lower and upper bounds of the confidence interval
     
     Examples
     --------
-    >>> calculate_boot_ci([1, 1, 2, 3, 5, 10])
-    array([1., 9.375])
+    >>> calculate_boot_stats([1, 2, 3, 4], 1000, level=0.95, random_seed=123)  
+    {'lower': 1.5, 'upper': 3.5, 'mean': 2.5, 'sd': 1.118033988749895}
     """
-    pass
+
+    if not isinstance(level, float):
+        raise TypeError("level should be of type 'float")
+
+    if not (level > 0 and level < 1):
+        raise ValueError("level should be between 0 and 1")
+
+    if level < 0.7:
+        warnings.warn("Warning: chosen level is quite low--level is a confidence level, not a signficance level")
+
+    # get the bootstrapped mean vector
+    dist = bootstrap_distribution(sample, rep, n, "mean", random_seed)
+
+    stats_dict = {}
+
+    stats_dict["lower"] = np.percentile(dist, 100 * (1-level)/2)
+    stats_dict["upper"] = np.percentile(dist, 100 * (1-(1-level)/2))
+
+    stats_dict["mean"] = np.mean(sample)
+    stats_dict["sd"] = np.std(sample)
+
+    return stats_dict
