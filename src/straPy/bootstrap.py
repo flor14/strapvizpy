@@ -83,11 +83,12 @@ def bootstrap_distribution(sample, rep, n="auto", estimator="mean", random_seed=
         axis=1
     )
 
-def calculate_boot_stats(sample, rep, n="auto", level=0.95, random_seed=None):
+def calculate_boot_stats(sample, rep, n="auto", level=0.95, estimator="mean", random_seed=None):
     """Calculates a bootstrapped confidence interval for a sample.
-    A bootstrapped confidence interval for the provided sample is
-    calculated for a confidence level `level`. The mean and standard
-    deviation of the sample are also returned.
+
+    A bootstrapped confidence interval for the desired estimator for
+    the provided sample is calculated for a confidence level `level`.
+    The mean and standard deviation of the sample are also returned.
 
     Parameters
     ----------
@@ -97,20 +98,24 @@ def calculate_boot_stats(sample, rep, n="auto", level=0.95, random_seed=None):
         number of replicates of the distribution
     n : str or int, default="auto"
         bootstrap sample size, "auto" specifies using the same size as the sample
-    random_seed : None or int, default=None
-        seed for random state
     level : float, default=0.95
         confidence level
+    estimator : {"mean", "median", "var", "sd"}
+        sampling distributor's estimator
+    random_seed : None or int, default=None
+        seed for random state
     
     Returns
     -------
     dictionary
-        dictionary containing mean and sd of sample, and lower and upper bounds of the confidence interval
+        Dictionary containing lower and upper bootstrapped confidence
+        interval for the desired estimator, along with the given estimator,
+        mean, and sd of the original sample.
     
     Examples
     --------
     >>> calculate_boot_stats([1, 2, 3, 4], 1000, level=0.95, random_seed=123)  
-    {'lower': 1.5, 'upper': 3.5, 'mean': 2.5, 'sd': 1.118033988749895}
+    {'lower': 1.5, 'upper': 3.5, 'sample_mean': 2.5, 'sample_sd': 1.118033988749895}
     """
 
     if not isinstance(level, float):
@@ -123,14 +128,26 @@ def calculate_boot_stats(sample, rep, n="auto", level=0.95, random_seed=None):
         warnings.warn("Warning: chosen level is quite low--level is a confidence level, not a signficance level")
 
     # get the bootstrapped mean vector
-    dist = bootstrap_distribution(sample, rep, n, "mean", random_seed)
+    supported_estimators = {
+        "mean": np.mean,
+        "median": np.median,
+        "var": np.var,
+        "sd": np.std
+    }
+
+    # get the bootstrapped mean vector
+    dist = bootstrap_distribution(sample=sample,
+                                  rep=rep,
+                                  n=n,
+                                  estimator=estimator,
+                                  random_seed=random_seed)
 
     stats_dict = {}
 
     stats_dict["lower"] = np.percentile(dist, 100 * (1-level)/2)
     stats_dict["upper"] = np.percentile(dist, 100 * (1-(1-level)/2))
-
-    stats_dict["mean"] = np.mean(sample)
-    stats_dict["sd"] = np.std(sample)
+    stats_dict["sample_" + estimator] = supported_estimators[estimator](sample)
+    stats_dict["sample_mean"] = np.mean(sample)
+    stats_dict["sample_sd"] = np.std(sample)
 
     return stats_dict
