@@ -166,7 +166,7 @@ def calculate_boot_stats(sample, rep, n="auto", level=0.95, estimator="mean", ra
     stats_dict["sample_" + estimator] = supported_estimators[estimator](sample)
     stats_dict["std_err"] = np.std(dist)
     stats_dict["level"] = level
-    stats_dict["sample size"] = len(sample)
+    stats_dict["sample_size"] = len(sample)
     stats_dict["n"] = n
     stats_dict["rep"] = rep
     stats_dict["estimator"] = estimator
