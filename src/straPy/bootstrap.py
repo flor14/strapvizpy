@@ -147,8 +147,7 @@ def calculate_boot_stats(sample, rep, n="auto", level=0.95, estimator="mean", ra
     stats_dict["lower"] = np.percentile(dist, 100 * (1-level)/2)
     stats_dict["upper"] = np.percentile(dist, 100 * (1-(1-level)/2))
     stats_dict["sample_" + estimator] = supported_estimators[estimator](sample)
-    stats_dict["sample_mean"] = np.mean(sample)
-    stats_dict["sample_sd"] = np.std(sample)
+    stats_dict["std_err"] = np.std(dist)
 
     return stats_dict
     
