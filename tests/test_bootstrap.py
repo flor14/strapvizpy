@@ -25,24 +25,24 @@ def test_bootstrap_distribution():
                            1.6666666666666667,
                            1.3333333333333333])
 
-    dist = bootstrap_distribution([1, 2, 3],
-                                  3,
-                                  estimator="var",
-                                  random_seed=1)
-
-    # checks with different estimator
-    assert np.array_equal(dist.tolist(),
-                          [0.2222222222222222,
-                           0.2222222222222222,
-                           0.2222222222222222])
-
     dist_2 = bootstrap_distribution([1, 2, 3],
                                   3,
                                   estimator="var",
                                   random_seed=1)
 
+    # checks with different estimator
+    assert np.array_equal(dist_2.tolist(),
+                          [0.2222222222222222,
+                           0.2222222222222222,
+                           0.2222222222222222])
+
+    dist_3 = bootstrap_distribution([1, 2, 3],
+                                  3,
+                                  estimator="var",
+                                  random_seed=1)
+
     # checks if random_seed works
-    assert np.array_equal(dist, dist_2)
+    assert np.array_equal(dist_2, dist_3)
 
 
 def test_bootstrap_distribution_errors():
