@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import warnings
 
-def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95, ci_random_seed=None, title = "", x_axis = "Bootstrap Sample Mean", y_axis = "Count"):
+def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95, ci_random_seed=None, title = "", x_axis = "Bootstrapped Sample Mean", y_axis = "Count"):
     
-    """Makes a histogram of a boostrapped sampling distribution 
-    with its confidence interval and oberserved mean.
+    """Makes a histogram of a bootstrapped sampling distribution 
+    with its confidence interval and observed mean.
      
     Parameters
     ----------
@@ -32,7 +32,7 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95, ci_ra
     Returns
     -------
     plot: histogram
-        histogram of bootstrap distribution with confidence interval and oberserved mean
+        histogram of bootstrapped distribution with confidence interval and observed mean
     
     Examples
     --------
