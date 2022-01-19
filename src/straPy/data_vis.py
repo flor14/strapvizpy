@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import warnings
 
-def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95, ci_center="mean", ci_random_seed=None, title = "", x_axis = "Bootstrap Sample Mean", y_axis = "Count"):
+def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95, ci_random_seed=None, title = "", x_axis = "Bootstrap Sample Mean", y_axis = "Count"):
     
     """Makes a histogram of a boostrapped sampling distribution 
-    with its confidence interval and oberserved center estimator.
+    with its confidence interval and oberserved mean.
      
     Parameters
     ----------
@@ -20,8 +20,6 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95, ci_ce
         bootstrap sample size, "auto" specifies using the same size as the sample
     ci_level : float, default=0.95
         confidence level
-    ci_center : {"mean", "median"}
-        sampling distributor's center
     ci_random_seed : None or int, default=None
         seed for random state
     title : str, default = ""
@@ -34,19 +32,13 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95, ci_ce
     Returns
     -------
     plot: histogram
-        histogram of bootstrap distribution with confidence interval and oberserved center estimator
+        histogram of bootstrap distribution with confidence interval and oberserved mean
     
     Examples
     --------
-    >>> histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000 ,n=100, ci_level=0.95, ci_center = "mean", ci_random_seed=123)
+    >>> histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000 ,n=100, ci_level=0.95, ci_random_seed=123)
     """
 
-    if not (ci_center == "mean" or ci_center == "median"):
-        raise ValueError("The value of the argument 'ci_center' should be either mean or median")
-        
-    if not isinstance(ci_center, str):
-        raise TypeError("The value of the argument 'ci_center' must be type of str.")
-        
     if not isinstance(title, str):
         raise TypeError("The value of the argument 'title' must be type of str.")
         
@@ -56,10 +48,10 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95, ci_ce
     if not isinstance(y_axis, str):
         raise TypeError("The value of the argument 'y_axis' must be type of str.")
         
-    plt.hist(calculate_boot_stats(sample, rep, level=ci_level, estimator=ci_center, random_seed = ci_random_seed, pass_dist=True)[1], density=False, bins=bin_size)
-    plt.axvline(calculate_boot_stats(sample, rep, level=ci_level, estimator=ci_center, random_seed = ci_random_seed, pass_dist=True)[0]["lower"], color='k', linestyle='--')
-    plt.axvline(calculate_boot_stats(sample, rep, level=ci_level, estimator=ci_center, random_seed = ci_random_seed, pass_dist=True)[0]["sample_" + ci_center], color='r', linestyle='-')
-    plt.axvline(calculate_boot_stats(sample, rep, level=ci_level, estimator=ci_center, random_seed = ci_random_seed, pass_dist=True)[0]["upper"], color='k', linestyle='--')
+    plt.hist(calculate_boot_stats(sample, rep, level=ci_level, random_seed = ci_random_seed, pass_dist=True)[1], density=False, bins=bin_size)
+    plt.axvline(calculate_boot_stats(sample, rep, level=ci_level, random_seed = ci_random_seed, pass_dist=True)[0]["lower"], color='k', linestyle='--')
+    plt.axvline(calculate_boot_stats(sample, rep, level=ci_level, random_seed = ci_random_seed, pass_dist=True)[0]["sample_mean"], color='r', linestyle='-')
+    plt.axvline(calculate_boot_stats(sample, rep, level=ci_level, random_seed = ci_random_seed, pass_dist=True)[0]["upper"], color='k', linestyle='--')
     plt.title(title)
     plt.xlabel(x_axis)
     plt.ylabel(y_axis)
