@@ -6,7 +6,7 @@ from straPy.bootstrap import bootstrap_distribution
 def test_bootstrap_distribution():
     """
     Tests the functionality of `bootstrap_distribution()`, which includes
-    checking the type of object returned, it's shape and it's values.
+    checking the type of object returned, its shape and its values.
 
     5 tests in total.
     """
