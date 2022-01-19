@@ -1,5 +1,14 @@
 import numpy as np
 import pandas as pd
+import warnings
+
+def get_supported_estimators():
+    return {
+        "mean": np.mean,
+        "median": np.median,
+        "var": np.var,
+        "sd": np.std
+    }
 
 def bootstrap_distribution(sample, rep, n="auto", estimator="mean", random_seed=None):
     """Bootstraps a sampling distribution for a sample.
@@ -82,27 +91,87 @@ def bootstrap_distribution(sample, rep, n="auto", estimator="mean", random_seed=
         axis=1
     )
 
-def calculate_boot_ci(dist, level=0.95):
-    """Calculates a confidence interval for a distribution.
+def calculate_boot_stats(sample, rep, n="auto", level=0.95, estimator="mean", random_seed=None, pass_dist=False):
+    """Calculates a bootstrapped confidence interval for a sample.
 
-    A confidence interval for the provided sampling distribution
-    `dist` is calculated for a confidence level `level`.
+    A bootstrapped confidence interval for the desired estimator for
+    the provided sample is calculated for a confidence level `level`.
+    Other stats and parameters of the distribution and sample are
+    also returned. 
 
     Parameters
     ----------
-    dist : numpy.ndarray
-        bootstrapped sampling distribution
+    sample : list or numpy.ndarray or pandas.core.series.Series 
+        sample to bootstrap
+    rep : int
+        number of replicates of the distribution
+    n : str or int, default="auto"
+        bootstrap sample size, "auto" specifies using the same size as the sample
     level : float, default=0.95
         confidence level
+    estimator : {"mean", "median", "var", "sd"}
+        sampling distributor's estimator
+    random_seed : None or int, default=None
+        seed for random state
+    pass_dist : bool, default = "False"
+        return the bootstrapped sample distribution - False or True 
     
     Returns
     -------
-    numpy.ndarray
-        lower and upper bounds of the confidence interval
+    dictionary
+        Dictionary containing lower and upper bootstrapped confidence
+        interval for the desired estimator, along with the given estimator.
+        Also 
     
     Examples
     --------
-    >>> calculate_boot_ci([1, 1, 2, 3, 5, 10])
-    array([1., 9.375])
+    >>> calculate_boot_stats([1, 2, 3, 4], 1000, level=0.95, random_seed=123)  
+    {'lower': 1.5,
+    'upper': 3.5,
+    'sample_mean': 2.5,
+    'std_err': 0.5414773771820943,
+    'level': 0.95,
+    'sample size': 4,
+    'n': 'auto',
+    'rep': 1000,
+    'estimator': 'mean'}
     """
-    pass
+
+    if not isinstance(level, float):
+        raise TypeError("level should be of type 'float")
+
+    if not (level > 0 and level < 1):
+        raise ValueError("level should be between 0 and 1")
+
+    if not isinstance(pass_dist, bool):
+        raise TypeError("pass_dist should be of type 'bool'")
+    
+
+    if level < 0.7:
+        warnings.warn("Warning: chosen level is quite low--level is a confidence level, not a signficance level")
+
+    supported_estimators = get_supported_estimators()
+
+    # get the bootstrapped mean vector
+    dist = bootstrap_distribution(sample=sample,
+                                  rep=rep,
+                                  n=n,
+                                  estimator=estimator,
+                                  random_seed=random_seed)
+
+    stats_dict = {}
+
+    stats_dict["lower"] = np.percentile(dist, 100 * (1-level)/2)
+    stats_dict["upper"] = np.percentile(dist, 100 * (1-(1-level)/2))
+    stats_dict["sample_" + estimator] = supported_estimators[estimator](sample)
+    stats_dict["std_err"] = np.std(dist)
+    stats_dict["level"] = level
+    stats_dict["sample_size"] = len(sample)
+    stats_dict["n"] = n
+    stats_dict["rep"] = rep
+    stats_dict["estimator"] = estimator
+
+    if pass_dist:
+        return stats_dict, dist
+    else:
+        return stats_dict
