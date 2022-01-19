@@ -2,13 +2,13 @@ import numpy as np
 import pandas as pd
 import warnings
 
-def get_supported_estimators():
-    return {
-        "mean": np.mean,
-        "median": np.median,
-        "var": np.var,
-        "sd": np.std
-    }
+# Global constant for supported estimators
+SUPPORTED_ESTIMATORS = {
+    "mean": np.mean,
+    "median": np.median,
+    "var": np.var,
+    "sd": np.std
+}
 
 def bootstrap_distribution(sample, rep, n="auto", estimator="mean", random_seed=None):
     """Bootstraps a sampling distribution for a sample.
@@ -40,12 +40,6 @@ def bootstrap_distribution(sample, rep, n="auto", estimator="mean", random_seed=
     >>> bootstrap_distribution([1, 2, 3], 3, 3)
     array([1.66, 2, 2.66])
     """
-    supported_estimators = {
-        "mean": np.mean,
-        "median": np.median,
-        "var": np.var,
-        "sd": np.std
-    }
 
     if not (isinstance(sample, list) or
             isinstance(sample, np.ndarray) or
@@ -71,7 +65,7 @@ def bootstrap_distribution(sample, rep, n="auto", estimator="mean", random_seed=
     if not isinstance(estimator, str):
         raise TypeError("estimator should be of type 'str'")
 
-    if estimator not in supported_estimators.keys():
+    if estimator not in SUPPORTED_ESTIMATORS.keys():
         raise ValueError("Supported estimators are mean, median, var, sd")
 
     if not (random_seed is None or isinstance(random_seed, int)):
@@ -86,7 +80,7 @@ def bootstrap_distribution(sample, rep, n="auto", estimator="mean", random_seed=
     if n == "auto":
         n = len(sample)
 
-    return supported_estimators[estimator](
+    return SUPPORTED_ESTIMATORS[estimator](
         np.random.choice(sample, size=(rep, n), replace=True),
         axis=1
     )
@@ -150,8 +144,6 @@ def calculate_boot_stats(sample, rep, n="auto", level=0.95, estimator="mean", ra
     if level < 0.7:
         warnings.warn("Warning: chosen level is quite low--level is a confidence level, not a signficance level")
 
-    supported_estimators = get_supported_estimators()
-
     # get the bootstrapped mean vector
     dist = bootstrap_distribution(sample=sample,
                                   rep=rep,
@@ -163,7 +155,7 @@ def calculate_boot_stats(sample, rep, n="auto", level=0.95, estimator="mean", ra
 
     stats_dict["lower"] = np.percentile(dist, 100 * (1-level)/2)
     stats_dict["upper"] = np.percentile(dist, 100 * (1-(1-level)/2))
-    stats_dict["sample_" + estimator] = supported_estimators[estimator](sample)
+    stats_dict["sample_" + estimator] = SUPPORTED_ESTIMATORS[estimator](sample)
     stats_dict["std_err"] = np.std(dist)
     stats_dict["level"] = level
     stats_dict["sample_size"] = len(sample)
