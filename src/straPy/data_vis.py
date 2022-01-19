@@ -86,10 +86,19 @@ def ci_table(stat_dic, precision=2, estimator=True, alpha=True):
     >>> stats_table
     >>> parameter_table
     """
+    if not isinstance(stat_dic, dict):
+        raise TypeError("Input statistics must be a dictionary")
+            
+    if not isinstance(precision, int):
+        raise TypeError("The precision parameter must be of type int.")
+            
+    if not (isinstance(estimator, bool) or 
+            isinstance(alpha, bool)):
+        raise TypeError("The estimator and alpha parameter  must be of type boolean.")
     
     # define the statistics table
     df = pd.DataFrame(data=np.array([(stat_dic["lower"], stat_dic["upper"], stat_dic["std_err"])]),
-        columns=["Lower bound CI", "Upper bound CI", "Standard Error"])
+                      columns=["Lower bound CI", "Upper bound CI", "Standard Error"])
 
     if estimator is True:
         s_name = "Sample " + stat_dic["estimator"]
@@ -101,39 +110,31 @@ def ci_table(stat_dic, precision=2, estimator=True, alpha=True):
             precision=precision, formatter={("Significance Level"): "{:.3f}"}
         )
     else:
-        stats_table = df.style.format(precision=rounding)
+        stats_table = df.style.format(precision=precision)
 
     #set formatting and caption for table
     stats_table.set_caption(
-        "Bootstrapping sample statistics from sample with "
-        + str(st["sample_size"])
-        + " records"
+        "Bootstrapping sample statistics from sample with "+ 
+        str(stat_dic["sample_size"]) + " records"
     ).set_table_styles(
         [{"selector": "caption", "props": "caption-side: bottom; font-size:1.00em;"}],
-        overwrite=False,
-    )
+        overwrite=False)
 
+    #create bootstrapping parameter summary table
     df_bs = pd.DataFrame(
         data=np.array(
-            [
-                (
-                    round(stat_dic["sample_size"], 0),
-                    round(stat_dic["rep"], 0),
-                    1 - stat_dic["level"],
-                )
-            ]
-        ),
-        columns=["Sample Size", "Repetition", "Significance Level"],
-    )
+            [(stat_dic["sample_size"], stat_dic["rep"], (1 - stat_dic["level"]))]),
+        columns=["Sample Size", "Repetition", "Significance Level"])
+    
     if stat_dic["n"] != "auto":
         df_bs["Samples per bootstrap"] = round(stat_dic["n"], 0)
 
+    #set formatting and caption for table
     bs_params = df_bs.style.format(
-        precision=0, formatter={("Significance Level"): "{:.3f}"}
-    )
+        precision=0, formatter={("Significance Level"): "{:.3f}"})
+    
     bs_params.set_caption("Parameters used for bootstrapping").set_table_styles(
         [{"selector": "caption", "props": "caption-side: bottom; font-size:1.00em;"}],
-        overwrite=False,
-    )
+        overwrite=False)
 
     return stats_table, bs_params
