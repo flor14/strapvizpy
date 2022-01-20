@@ -64,7 +64,7 @@ def summary_tables(stat, precision=2, estimator=True, alpha=True):
 
     Parameters
     ----------
-    stat : dict
+    stat : dict or tuple
         summary statistics produced by the `calculate_boot_stats()` function 
     precision : int, default=2
         the precision of the table values
@@ -92,16 +92,26 @@ def summary_tables(stat, precision=2, estimator=True, alpha=True):
     >>> stats_table
     >>> parameter_table
     """
-    if not isinstance(stat, dict):
-        raise TypeError("Input statistics must be a dictionary")
-            
+
+    if not(isinstance(stat, tuple) | isinstance(stat, dict)):
+        raise TypeError("The stats parameter must be created from calculate_boot_stats() function.")
     if not isinstance(precision, int):
         raise TypeError("The precision parameter must be of type int.")
-            
-    if not (isinstance(estimator, bool) or 
-            isinstance(alpha, bool)):
+    if not (isinstance(estimator, bool) & isinstance(alpha, bool)):
         raise TypeError("The estimator and alpha parameter must be of type boolean.")
     
+    if isinstance(stat, tuple) == True:
+        stat = stat[0]
+        
+    dic_keys = stat.keys()
+    
+    if not (("lower" in dic_keys)==True & ("upper" in dic_keys)==True & ("std_err" in dic_keys)==True &
+        ("estimator" in dic_keys)==True & ("level" in dic_keys)==True & ("sample_size" in dic_keys)==True &
+        ("n" in dic_keys)==True & ("rep" in dic_keys)==True):
+        raise TypeError("The statistics dictionary is missing a key. Please rerun calculate_boot_stats() function")
+        
+        
+        
     # define the statistics table
     df = pd.DataFrame(data=np.array([(stat["lower"], stat["upper"], stat["std_err"])]),
                       columns=["Lower Bound CI", "Upper Bound CI", "Standard Error"])
