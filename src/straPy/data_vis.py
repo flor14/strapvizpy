@@ -3,10 +3,12 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import warnings
 
-def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95, ci_random_seed=None, title = "", x_axis = "Bootstrapped Sample Mean", y_axis = "Count"):
+def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
+                      ci_random_seed=None, title = "", x_axis = "Bootstrap Sample Mean", 
+                      y_axis = "Count"):
     
-    """Makes a histogram of a bootstrapped sampling distribution 
-    with its confidence interval and observed mean.
+    """Makes a histogram of a boostrapped sampling distribution 
+    with its confidence interval and oberserved mean.
      
     Parameters
     ----------
@@ -32,7 +34,7 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95, ci_ra
     Returns
     -------
     plot: histogram
-        histogram of bootstrapped distribution with confidence interval and observed mean
+        histogram of bootstrap distribution with confidence interval and oberserved mean
     
     Examples
     --------
@@ -48,13 +50,35 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95, ci_ra
     if not isinstance(y_axis, str):
         raise TypeError("The value of the argument 'y_axis' must be type of str.")
         
-    plt.hist(calculate_boot_stats(sample, rep, level=ci_level, random_seed = ci_random_seed, pass_dist=True)[1], density=False, bins=bin_size)
-    plt.axvline(calculate_boot_stats(sample, rep, level=ci_level, random_seed = ci_random_seed, pass_dist=True)[0]["lower"], color='k', linestyle='--')
-    plt.axvline(calculate_boot_stats(sample, rep, level=ci_level, random_seed = ci_random_seed, pass_dist=True)[0]["sample_mean"], color='r', linestyle='-')
-    plt.axvline(calculate_boot_stats(sample, rep, level=ci_level, random_seed = ci_random_seed, pass_dist=True)[0]["upper"], color='k', linestyle='--')
+    sample_stat_dict = calculate_boot_stats(sample, rep, level=ci_level, 
+                                            random_seed = ci_random_seed, pass_dist=True)
+        
+    plt.hist(sample_stat_dict[1], density=False, bins=bin_size)
+    plt.axvline(sample_stat_dict[0]["lower"], color='k', linestyle='--')
+    plt.axvline(sample_stat_dict[0]["sample_mean"], color='r', linestyle='-')
+    plt.axvline(sample_stat_dict[0]["upper"], color='k', linestyle='--')
+    axes = plt.gca()
+    y_min, y_max = axes.get_ylim()
+    plt.text(sample_stat_dict[0]["sample_mean"], 
+             y_max * 0.9 , 
+             (str(round(sample_stat_dict[0]["sample_mean"], 2))+
+              '('+u"\u00B1"+str(round(sample_stat_dict[0]['std_err'],2))+')'), 
+             ha='center', va='center',rotation='horizontal', 
+             color = "k", bbox={'facecolor':'white', 'pad':5})
+    plt.text(sample_stat_dict[0]["upper"], 
+             y_max * 0.9 , 
+             (str(round(sample_stat_dict[0]["upper"], 2))), 
+             ha='center', va='center',rotation='horizontal', 
+             color = "k", bbox={'facecolor':'white', 'pad':5})
+    plt.text(sample_stat_dict[0]["lower"], 
+             y_max * 0.9 , 
+             (str(round(sample_stat_dict[0]["lower"], 2))), 
+             ha='center', va='center',rotation='horizontal', 
+             color = "k", bbox={'facecolor':'white', 'pad':5})
     plt.title(title)
     plt.xlabel(x_axis)
     plt.ylabel(y_axis)
+    
 
 
 def summary_tables(stat, precision=2, estimator=True, alpha=True):
