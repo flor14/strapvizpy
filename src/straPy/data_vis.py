@@ -118,8 +118,6 @@ type boolean.")
         raise TypeError("The statistics dictionary is missing a key. \
 Please rerun calculate_boot_stats() function")
         
-        
-        
     # define the statistics table
     df = pd.DataFrame(data=np.array([(stat["lower"], stat["upper"],
                                       stat["std_err"])]),
@@ -134,9 +132,9 @@ Please rerun calculate_boot_stats() function")
         df["Significance Level"] = 1 - stat["level"]
         stats_table = df.style.format(
             precision=precision, formatter={("Significance Level"): "{:.3f}"}
-        )
+        ).hide_index()
     else:
-        stats_table = df.style.format(precision=precision)
+        stats_table = df.style.format(precision=precision).hide_index()
 
     # set formatting and caption for table
     stats_table.set_caption(
@@ -158,7 +156,7 @@ font-size: 1.00em;"}],
 
     # set formatting and caption for table
     bs_params = df_bs.style.format(
-        precision=0, formatter={("Significance Level"): "{:.3f}"})
+        precision=0, formatter={("Significance Level"): "{:.3f}"}).hide_index()
     
     bs_params.set_caption("Parameters used for bootstrapping").set_table_styles(
         [{"selector": "caption", "props": "caption-side: bottom; \
