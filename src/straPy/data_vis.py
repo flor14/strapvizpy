@@ -76,13 +76,13 @@ def summary_tables(stat, precision=2, estimator=True, alpha=True):
     Returns
     -------
     summary statistics: table object
-        table summerizing the lower bound and upper bound of the confidence interval,
-        the standard error, the sampling statitic (if estimator = True), and the
-        significance level (if alpha = True)
+        table summerizing the lower bound and upper bound of the confidence
+        interval,the standard error, the sampling statitic (if estimator = True),
+        and the significance level (if alpha = True)
     bootstrap parameters: table object
-        table  summerizing the parameters of the bootstrap sampling spficiying 
-        the original sample size, number of repititions, the significance level, 
-        and the number of samples in each bootstrap if its different from the 
+        table  summerizing the parameters of the bootstrap sampling spficiying
+        the original sample size, number of repititions, the significance level,
+        and the number of samples in each bootstrap if its different from the
         original sample size.
         
     Examples
@@ -94,27 +94,37 @@ def summary_tables(stat, precision=2, estimator=True, alpha=True):
     """
 
     if not(isinstance(stat, tuple) | isinstance(stat, dict)):
-        raise TypeError("The stats parameter must be created from calculate_boot_stats() function.")
+        raise TypeError("The stats parameter must be created from \
+calculate_boot_stats() function.")
     if not isinstance(precision, int):
         raise TypeError("The precision parameter must be of type int.")
     if not (isinstance(estimator, bool) & isinstance(alpha, bool)):
-        raise TypeError("The estimator and alpha parameter must be of type boolean.")
+        raise TypeError("The estimator and alpha parameters must be of \
+type boolean.")
     
-    if isinstance(stat, tuple) == True:
+    if isinstance(stat, tuple):
         stat = stat[0]
         
     dic_keys = stat.keys()
     
-    if not (("lower" in dic_keys)==True & ("upper" in dic_keys)==True & ("std_err" in dic_keys)==True &
-        ("estimator" in dic_keys)==True & ("level" in dic_keys)==True & ("sample_size" in dic_keys)==True &
-        ("n" in dic_keys)==True & ("rep" in dic_keys)==True):
-        raise TypeError("The statistics dictionary is missing a key. Please rerun calculate_boot_stats() function")
+    if not (("lower" in dic_keys) &
+            ("upper" in dic_keys) &
+            ("std_err" in dic_keys) &
+            ("estimator" in dic_keys) &
+            ("level" in dic_keys) &
+            ("sample_size" in dic_keys) &
+            ("n" in dic_keys) &
+            ("rep" in dic_keys)):
+        raise TypeError("The statistics dictionary is missing a key. \
+Please rerun calculate_boot_stats() function")
         
         
         
     # define the statistics table
-    df = pd.DataFrame(data=np.array([(stat["lower"], stat["upper"], stat["std_err"])]),
-                      columns=["Lower Bound CI", "Upper Bound CI", "Standard Error"])
+    df = pd.DataFrame(data=np.array([(stat["lower"], stat["upper"],
+                                      stat["std_err"])]),
+                      columns=["Lower Bound CI", "Upper Bound CI",
+                               "Standard Error"])
 
     if estimator is True:
         s_name = "Sample " + stat["estimator"]
@@ -130,10 +140,11 @@ def summary_tables(stat, precision=2, estimator=True, alpha=True):
 
     # set formatting and caption for table
     stats_table.set_caption(
-        "Bootstrapping sample statistics from sample with "+ 
+        "Bootstrapping sample statistics from sample with "+
         str(stat["sample_size"]) + " records"
     ).set_table_styles(
-        [{"selector": "caption", "props": "caption-side: bottom; font-size:1.00em;"}],
+        [{"selector": "caption", "props": "caption-side: bottom; \
+font-size: 1.00em;"}],
         overwrite=False)
 
     # create bootstrapping parameter summary table
@@ -150,7 +161,8 @@ def summary_tables(stat, precision=2, estimator=True, alpha=True):
         precision=0, formatter={("Significance Level"): "{:.3f}"})
     
     bs_params.set_caption("Parameters used for bootstrapping").set_table_styles(
-        [{"selector": "caption", "props": "caption-side: bottom; font-size:1.00em;"}],
+        [{"selector": "caption", "props": "caption-side: bottom; \
+font-size:1.00em;"}],
         overwrite=False)
 
     return stats_table, bs_params

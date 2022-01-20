@@ -4,12 +4,8 @@ from straPy.bootstrap import bootstrap_distribution
 from straPy.bootstrap import calculate_boot_stats
 from straPy.data_vis import summary_tables
 
-
-
 def test_table_outputs():
-    """
-    Tests the functionality of the summary table function.
-    """
+    """Tests the functionality of the summary table function."""
     
     st = calculate_boot_stats(np.random.randint(1, 20, 20), 1000,
                               level=0.95, random_seed=123)
@@ -19,14 +15,12 @@ def test_table_outputs():
     assert bs.data.shape[0] == 1, "Parameter table should have 1 row"
     assert bs.data.shape[1] == 3, "Parameter table should have 3 columns"
     
-
     s, bs = summary_tables(st, estimator=False, alpha=False)
     assert s.data.shape[0] == 1, "Stats table should have 1 row"
     assert s.data.shape[1] == 3, "Stats table should have 3 columns"
     assert bs.data.shape[0] == 1, "Parameter table should have 1 row"
     assert bs.data.shape[1] == 3, "Parameter table should have 3 columns"
     
-
     s, bs = summary_tables(st, alpha=False)
     assert s.data.shape[0] == 1, "Stats table should have 1 row"
     assert s.data.shape[1] == 4, "Stats table should have 4 columns"
@@ -40,9 +34,10 @@ def test_table_outputs():
     assert bs.data.shape[1] == 4, "Parameter table should have 4 columns"
     
     st = calculate_boot_stats(np.random.randint(1, 20, 20), 1000,
-                              level=0.95, random_seed=123, n=10, estimator="median")
+                              level=0.95, random_seed=123, n=10,
+                              estimator="median")
     s, bs = summary_tables(st)
-    assert ("Sample median" in s.data.columns)== True, "Test Statistic name not correct"
+    assert ("Sample median" in s.data.columns), "Test Statistic name incorrect"
     
     
 def test_table_errors():
@@ -50,7 +45,8 @@ def test_table_errors():
     
     with raises(TypeError) as e:
         summary_tables(6, precision=2, estimator=True, alpha=True)
-    assert str(e.value) == "The stats parameter must be created from calculate_boot_stats() function."
+    assert str(e.value) == ("The stats parameter must be created from \
+calculate_boot_stats() function.")
     
     st = calculate_boot_stats(np.random.randint(1, 20, 20), 1000,
                               level=0.95, random_seed=123)
@@ -60,13 +56,16 @@ def test_table_errors():
     
     with raises(TypeError) as e:
         summary_tables(st, precision=2, estimator="Y", alpha=True)
-    assert str(e.value) == "The estimator and alpha parameter must be of type boolean."
+    assert str(e.value) == ("The estimator and alpha parameters must be \
+of type boolean.")
     
     with raises(TypeError) as e:
         summary_tables(st, precision=2, alpha=9)
-    assert str(e.value) == "The estimator and alpha parameter must be of type boolean."
+    assert str(e.value) == ("The estimator and alpha parameters must be \
+of type boolean.")
     
     del st["lower"]
     with raises(TypeError) as e:
         summary_tables(st, precision=2)
-    assert str(e.value) == "The statistics dictionary is missing a key. Please rerun calculate_boot_stats() function"
+    assert str(e.value) == ("The statistics dictionary is missing a key. \
+Please rerun calculate_boot_stats() function")
