@@ -65,7 +65,7 @@ def summary_tables(stat_dic, precision=2, estimator=True, alpha=True):
     ----------
     stat_dic : dict
         summary statistics produced by the `calculate_boot_stats()` function 
-    precision : int, default= 2
+    precision : int, default=2
         the precision of the table values
     esitmator : boolean, default=True
         include the bootstrap estimate in the summary statistics table
