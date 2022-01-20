@@ -120,7 +120,7 @@ def summary_tables(stat_dic, precision=2, estimator=True, alpha=True):
         [{"selector": "caption", "props": "caption-side: bottom; font-size:1.00em;"}],
         overwrite=False)
 
-    #create bootstrapping parameter summary table
+    # create bootstrapping parameter summary table
     df_bs = pd.DataFrame(
         data=np.array(
             [(stat_dic["sample_size"], stat_dic["rep"], (1 - stat_dic["level"]))]),
