@@ -98,7 +98,7 @@ def summary_tables(stat_dic, precision=2, estimator=True, alpha=True):
     
     # define the statistics table
     df = pd.DataFrame(data=np.array([(stat_dic["lower"], stat_dic["upper"], stat_dic["std_err"])]),
-                      columns=["Lower bound CI", "Upper bound CI", "Standard Error"])
+                      columns=["Lower Bound CI", "Upper Bound CI", "Standard Error"])
 
     if estimator is True:
         s_name = "Sample " + stat_dic["estimator"]
