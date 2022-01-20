@@ -67,7 +67,7 @@ def summary_tables(stat, precision=2, estimator=True, alpha=True):
         summary statistics produced by the `calculate_boot_stats()` function 
     precision : int, default=2
         the precision of the table values
-    esitmator : boolean, default=True
+    estimator : boolean, default=True
         include the bootstrap estimate in the summary statistics table
     alpha: boolean, default=True
         include the significance level in the summary statistics table
