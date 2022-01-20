@@ -129,7 +129,7 @@ def summary_tables(stat_dic, precision=2, estimator=True, alpha=True):
     if stat_dic["n"] != "auto":
         df_bs["Samples per bootstrap"] = round(stat_dic["n"], 0)
 
-    #set formatting and caption for table
+    # set formatting and caption for table
     bs_params = df_bs.style.format(
         precision=0, formatter={("Significance Level"): "{:.3f}"})
     
