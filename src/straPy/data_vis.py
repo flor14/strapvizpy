@@ -94,7 +94,7 @@ def summary_tables(stat_dic, precision=2, estimator=True, alpha=True):
             
     if not (isinstance(estimator, bool) or 
             isinstance(alpha, bool)):
-        raise TypeError("The estimator and alpha parameter  must be of type boolean.")
+        raise TypeError("The estimator and alpha parameter must be of type boolean.")
     
     # define the statistics table
     df = pd.DataFrame(data=np.array([(stat_dic["lower"], stat_dic["upper"], stat_dic["std_err"])]),
