@@ -62,7 +62,7 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
     plt.text(sample_stat_dict[0]["sample_mean"], 
              y_max * 0.9 , 
              (str(round(sample_stat_dict[0]["sample_mean"], 2))+
-              '('+'+/-'+str(round(sample_stat_dict[0]['std_err'],2))+')'), 
+              '('+u"\u00B1"+str(round(sample_stat_dict[0]['std_err'],2))+')'), 
              ha='center', va='center',rotation='horizontal', 
              color = "k", bbox={'facecolor':'white', 'pad':5})
     plt.text(sample_stat_dict[0]["upper"], 
