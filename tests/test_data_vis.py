@@ -3,7 +3,6 @@ from straPy.data_vis import histogram_ci_plot
 from pytest import raises
 import numpy as np
 import matplotlib.pyplot as plt
-import warnings
 
 
 def test_histogram_ci_plot():
@@ -14,6 +13,8 @@ def test_histogram_ci_plot():
     --------
     None
         The test should pass and no asserts should be displayed.
+        
+    6 tests in total
     """
     
     # tests with invalid input type of title
