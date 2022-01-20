@@ -19,42 +19,42 @@ def test_histogram_ci_plot():
     
     # tests with invalid input type of title
     with raises(TypeError) as e:
-        histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000 ,n=100, ci_level=0.95, title = 123)
+        histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000, n=100, ci_level=0.95, title=123)
     assert str(e.value) == (
         "The value of the argument 'title' must be type of str."
     )
     
     # tests with invalid input type of title
     with raises(TypeError) as e:
-        histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000 ,n=100, ci_level=0.95, title = True)
+        histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000, n=100, ci_level=0.95, title=True)
     assert str(e.value) == (
         "The value of the argument 'title' must be type of str."
     )
     
     # tests with invalid input type of x_axis
     with raises(TypeError) as e:
-        histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000 ,n=100, ci_level=0.95, x_axis = 123)
+        histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000, n=100, ci_level=0.95, x_axis=123)
     assert str(e.value) == (
         "The value of the argument 'x_axis' must be type of str."
     )
     
     # tests with invalid input type of x_axis
     with raises(TypeError) as e:
-        histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000 ,n=100, ci_level=0.95, x_axis = True)
+        histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000, n=100, ci_level=0.95, x_axis=True)
     assert str(e.value) == (
         "The value of the argument 'x_axis' must be type of str."
     )
     
     # tests with invalid input type of y_axis
     with raises(TypeError) as e:
-        histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000 ,n=100, ci_level=0.95, y_axis = 123)
+        histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000, n=100, ci_level=0.95, y_axis=123)
     assert str(e.value) == (
         "The value of the argument 'y_axis' must be type of str."
     )
     
     # tests with invalid input type of y_axis
     with raises(TypeError) as e:
-        histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000 ,n=100, ci_level=0.95, y_axis = True)
+        histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000, n=100, ci_level=0.95, y_axis=True)
     assert str(e.value) == (
         "The value of the argument 'y_axis' must be type of str."
     )
