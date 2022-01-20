@@ -112,7 +112,7 @@ def summary_tables(stat_dic, precision=2, estimator=True, alpha=True):
     else:
         stats_table = df.style.format(precision=precision)
 
-    #set formatting and caption for table
+    # set formatting and caption for table
     stats_table.set_caption(
         "Bootstrapping sample statistics from sample with "+ 
         str(stat_dic["sample_size"]) + " records"
