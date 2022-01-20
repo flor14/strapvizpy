@@ -36,7 +36,7 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95, ci_ra
     
     Examples
     --------
-    >>> histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000 ,n=100, ci_level=0.95, ci_random_seed=123)
+    >>> histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000, n=100, ci_level=0.95, ci_random_seed=123)
     """
 
     if not isinstance(title, str):
