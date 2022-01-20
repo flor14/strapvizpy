@@ -58,7 +58,8 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95, ci_ra
 
 
 def summary_tables(stat, precision=2, estimator=True, alpha=True):
-    """Makes two tables that summerize the statistics from the bootstrapped samples and the parameters for creating the bootstrapped samples.
+    """Makes two tables that summerize the statistics from the bootstrapped 
+    samples and the parameters for creating the bootstrapped samples.
 
 
     Parameters
@@ -87,7 +88,7 @@ def summary_tables(stat, precision=2, estimator=True, alpha=True):
     Examples
     --------
     >>> st = calculate_boot_stats([1, 2, 3, 4], 1000, level=0.95, random_seed=123)
-    >>> stats_table, parameter_table  = ci_table(st)
+    >>> stats_table, parameter_table  = summary_tables(st)
     >>> stats_table
     >>> parameter_table
     """
@@ -107,7 +108,7 @@ def summary_tables(stat, precision=2, estimator=True, alpha=True):
 
     if estimator is True:
         s_name = "Sample " + stat["estimator"]
-        df[s_name] = np.round(stat["sample_" + stat["estimator"]], rounding)
+        df[s_name] = stat["sample_" + stat["estimator"]]
 
     if alpha is True:
         df["Significance Level"] = 1 - stat["level"]
