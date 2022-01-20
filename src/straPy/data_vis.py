@@ -99,15 +99,16 @@ def summary_tables(stat, precision=2, estimator=True, alpha=True):
 
     Returns
     -------
-    summary statistics: table object
+    summary statistics: style object
         table summerizing the lower bound and upper bound of the confidence
         interval,the standard error, the sampling statitic (if estimator = True),
-        and the significance level (if alpha = True)
-    bootstrap parameters: table object
+        and the significance level (if alpha = True). Style objects do not display
+        well in a python shell.
+    bootstrap parameters: style object
         table  summerizing the parameters of the bootstrap sampling spficiying
         the original sample size, number of repititions, the significance level,
         and the number of samples in each bootstrap if its different from the
-        original sample size.
+        original sample size. Style objects do not display well in a python shell.
         
     Examples
     --------
