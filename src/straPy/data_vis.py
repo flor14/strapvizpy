@@ -80,35 +80,112 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
     plt.ylabel(y_axis)
     
 
-def ci_table(dist, ci, se=True, size=True, mean=True, alpha=0.05):
-    """Makes a table that shows lower bound and upper bound of the confidence interval and relevant statistics
 
-    A table that contains the provided sampling distribution`dist`'s 
-    confidence interval `ci` and other relevant statistics, including
-    standard error `se`, sample size `size`, sample mean `mean` and 
-    selected alpha `alpha`.
+def summary_tables(stat, precision=2, estimator=True, alpha=True):
+    """Makes two tables that summerize the statistics from the bootstrapped 
+    samples and the parameters for creating the bootstrapped samples.
 
 
     Parameters
     ----------
-    dist : numpy.ndarray
-        bootstrapped sampling distribution
-    ci : numpy.ndarray
-        confidence interval
-    size : boolean, default=True
-        sample size
-    mean: boolean, default=True
-        sample mean
-    alpha : float, default=0.05
-        selected alpha
+    stat : dict or tuple
+        summary statistics produced by the `calculate_boot_stats()` function 
+    precision : int, default=2
+        the precision of the table values
+    estimator : boolean, default=True
+        include the bootstrap estimate in the summary statistics table
+    alpha: boolean, default=True
+        include the significance level in the summary statistics table
 
     Returns
     -------
-    table object
-        table with lower bound and upper bound of the confidence interval and relevant statistics
-    
+    summary statistics: style object
+        table summerizing the lower bound and upper bound of the confidence
+        interval,the standard error, the sampling statitic (if estimator = True),
+        and the significance level (if alpha = True). Style objects do not display
+        well in a python shell.
+    bootstrap parameters: style object
+        table  summerizing the parameters of the bootstrap sampling spficiying
+        the original sample size, number of repititions, the significance level,
+        and the number of samples in each bootstrap if its different from the
+        original sample size. Style objects do not display well in a python shell.
+        
     Examples
     --------
-    >>> ci_table([1, 1, 2, 3, 5, 10]，[1., 9.375], se=True, size=True, mean=True, alpha=0.05）
+    >>> st = calculate_boot_stats([1, 2, 3, 4], 1000, level=0.95, random_seed=123)
+    >>> stats_table, parameter_table  = summary_tables(st)
+    >>> stats_table
+    >>> parameter_table
     """
-    pass
+
+    if not(isinstance(stat, tuple) | isinstance(stat, dict)):
+        raise TypeError("The stats parameter must be created from \
+calculate_boot_stats() function.")
+    if not isinstance(precision, int):
+        raise TypeError("The precision parameter must be of type int.")
+    if not (isinstance(estimator, bool) & isinstance(alpha, bool)):
+        raise TypeError("The estimator and alpha parameters must be of \
+type boolean.")
+    
+    if isinstance(stat, tuple):
+        stat = stat[0]
+        
+    dic_keys = stat.keys()
+    
+    if not (("lower" in dic_keys) &
+            ("upper" in dic_keys) &
+            ("std_err" in dic_keys) &
+            ("estimator" in dic_keys) &
+            ("level" in dic_keys) &
+            ("sample_size" in dic_keys) &
+            ("n" in dic_keys) &
+            ("rep" in dic_keys)):
+        raise TypeError("The statistics dictionary is missing a key. \
+Please rerun calculate_boot_stats() function")
+        
+    # define the statistics table
+    df = pd.DataFrame(data=np.array([(stat["lower"], stat["upper"],
+                                      stat["std_err"])]),
+                      columns=["Lower Bound CI", "Upper Bound CI",
+                               "Standard Error"])
+
+    if estimator is True:
+        s_name = "Sample " + stat["estimator"]
+        df[s_name] = stat["sample_" + stat["estimator"]]
+
+    if alpha is True:
+        df["Significance Level"] = 1 - stat["level"]
+        stats_table = df.style.format(
+            precision=precision, formatter={("Significance Level"): "{:.3f}"}
+        ).hide_index()
+    else:
+        stats_table = df.style.format(precision=precision).hide_index()
+
+    # set formatting and caption for table
+    stats_table.set_caption(
+        "Bootstrapping sample statistics from sample with "+
+        str(stat["sample_size"]) + " records"
+    ).set_table_styles(
+        [{"selector": "caption", "props": "caption-side: bottom; \
+font-size: 1.00em;"}],
+        overwrite=False)
+
+    # create bootstrapping parameter summary table
+    df_bs = pd.DataFrame(
+        data=np.array(
+            [(stat["sample_size"], stat["rep"], (1 - stat["level"]))]),
+        columns=["Sample Size", "Repetition", "Significance Level"])
+    
+    if stat["n"] != "auto":
+        df_bs["Samples per bootstrap"] = round(stat["n"], 0)
+
+    # set formatting and caption for table
+    bs_params = df_bs.style.format(
+        precision=0, formatter={("Significance Level"): "{:.3f}"}).hide_index()
+    
+    bs_params.set_caption("Parameters used for bootstrapping").set_table_styles(
+        [{"selector": "caption", "props": "caption-side: bottom; \
+font-size:1.00em;"}],
+        overwrite=False)
+
+    return stats_table, bs_params
