@@ -19,10 +19,10 @@ $ pip install straPy
 
 ## Function Usage
 
-* bootstrap_distribution: A sampling distribution of `rep` replicates is generated for a specified estimator with replacement for a given bootstrap sample size.
-* calculate_boot_ci: A confidence interval for a given sampling distribution is calculated for a given confidence level.
-* density_ci_plot: Generates a plot showing a density curve of a given sampling distribution along with its confidence interval ci for a given alpha.
-* ci_table: Generates a table that contains a given sampling distribution's mean and standard deviation along with relevant statistics like its confidence interval for a given alpha.
+- **bootstrap_distribution:** A sampling distribution of `rep` replicates is generated for a specified estimator with replacement for a given bootstrap sample size.  
+- **calculate_boot_stats:** Calculates a confidence interval for a given sampling distribution as well as other bootstapped statistics.  
+- **histogram_ci_plot:** Makes a histogram of a boostrapped sampling distribution with its confidence interval and oberserved sample statistic.  
+- **summary_tabels:** Generates a table that contains a given sampling distribution's mean and standard deviation along with relevant statistics as well as a summary table of the bootstrap distributions parameters  
 
 ## Contributing
 Julien Gordon, Gautham Pughazhendhi, Zack Tang, and Margot Vore.
