@@ -1,6 +1,6 @@
 import numpy as np
 from pytest import raises
-from straPy.bootstrap import bootstrap_distribution
+from straPy.bootstrap import bootstrap_distribution, calculate_boot_stats
 
 
 def test_bootstrap_distribution():
@@ -104,3 +104,93 @@ def test_bootstrap_distribution_errors():
     with raises(ValueError) as e:
         bootstrap_distribution([1, 2, 3], 3, 3, random_seed=-3)
     assert str(e.value) == "Invalid value for random_seed"
+
+
+def test_calculate_boot_stats():
+    """
+    Tests functionality of calculate_boot_stats()
+
+    14 tests in total.
+    """
+
+    # set up test dicts
+    test_dict = calculate_boot_stats(
+        [1, 2, 3, 4],
+        1000,
+        random_seed=123)
+
+
+    test_dict_2 = calculate_boot_stats(
+        [1000, 2000, 3000, 4000],
+        n=4,
+        rep=1000,
+        level=0.9,
+        random_seed=1234,
+        estimator='var')
+
+    test_dict_3, test_sample_dist = calculate_boot_stats(
+        [1000, 2000, 3000, 4000],
+        n=5,
+        rep=1000,
+        level=0.9,
+        random_seed=1234,
+        estimator='var',
+        pass_dist=True)
+
+    # checks the return type
+    assert isinstance(test_dict, dict)
+
+    assert isinstance(test_sample_dist, np.ndarray)
+    
+    # check properties and values of dictionary output
+    assert len(test_dict) == 9
+
+    assert test_dict["lower"] == 1.5
+
+    assert test_dict["upper"] == 3.5
+
+    assert test_dict["std_err"] == 0.5414773771820943
+
+    assert test_dict["sample_size"] == 4
+
+    assert test_dict["n"] == 'auto'
+
+    assert test_dict['rep'] == 1000
+
+    assert test_dict['level'] == 0.95
+
+    assert test_dict['estimator'] == 'mean'
+
+    # increasing sampling number should decrease the standard error
+    assert test_dict_2['std_err'] > test_dict_3['std_err']
+
+    # changing level parameter should change its value
+    assert test_dict_2['level'] != test_dict['level']
+
+    # changing estimate parameter should change its value
+    assert test_dict_3['estimator'] == 'var'
+
+
+def test_calculate_boot_stats_errors():
+    """
+    Tests error cases and messages thrown by `calculate_boot_stats()`.
+
+    4 tests in total.
+    """
+
+    # tests with invalid input type of sample
+    with raises(TypeError) as e:
+        calculate_boot_stats([1, 2, 3, 4], 1000, level='ninety-five', estimator="mean", random_seed=123)
+    assert str(e.value) == ("level should be of type 'float'")
+
+    with raises(TypeError) as e:
+        calculate_boot_stats([1, 2, 3, 4], 1000, level=0.95, estimator="mean", random_seed=123, pass_dist='True')
+    assert str(e.value) == ("pass_dist should be of type 'bool'")
+
+    with raises(ValueError) as e:
+        calculate_boot_stats([1, 2, 3, 4], 1000, level=1.0, estimator="mean", random_seed=123)
+    assert str(e.value) == ("level should be between 0 and 1")
+
+    with raises(ValueError) as e:
+        calculate_boot_stats([1, 2, 3, 4], 1000, level=0.0, estimator="mean", random_seed=123)
+    assert str(e.value) == ("level should be between 0 and 1")
