@@ -40,10 +40,10 @@ If you are proposing a feature:
 
 ## Get Started!
 
-Ready to contribute? Here's how to set up `straPy` for local development.
+Ready to contribute? Here's how to set up `strapPy` for local development.
 
-1. Download a copy of `straPy` locally.
-2. Install `straPy` using `poetry`:
+1. Download a copy of `strapPy` locally.
+2. Install `strapPy` using `poetry`:
 
     ```console
     $ poetry install
@@ -69,5 +69,5 @@ Before you submit a pull request, check that it meets these guidelines:
 
 ## Code of Conduct
 
-Please note that the `straPy` project is released with a 
-[`Code of Conduct`](https://github.com/UBC-MDS/straPy/blob/main/CONTRIBUTING.md). By contributing to this project you agree to abide by its terms.
+Please note that the `strapPy` project is released with a 
+[`Code of Conduct`](https://github.com/UBC-MDS/strapPy/blob/main/CONTRIBUTING.md). By contributing to this project you agree to abide by its terms.

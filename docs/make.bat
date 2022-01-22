@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=straPy
+set SPHINXPROJ=strapPy
 
 if "%1" == "" goto help
 
