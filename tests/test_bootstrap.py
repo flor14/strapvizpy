@@ -112,6 +112,11 @@ def test_calculate_boot_stats():
 
     14 tests in total.
     """
+    # test integration with bootstrap dist function
+    test_dist = bootstrap_distribution(sample=[1, 2, 3],
+                                       rep=100)
+
+    assert isinstance(test_dist, np.ndarray)
 
     # set up test dicts
     test_dict = calculate_boot_stats(
