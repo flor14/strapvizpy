@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "straPy"
+name = "strapPy"
 version = "0.1.0"
 description = "Performs bootstrapping of a dataset to produce plots and statistics for use in final reports and documents. "
 authors = ["Julien Gordon, Gautham Pughazhendhi, Zack Tang, Margot Vore"]
