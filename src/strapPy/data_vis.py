@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import warnings
+import strapPy
 
 def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
                       ci_random_seed=None, title = "", x_axis = "Bootstrap Sample Mean", 
@@ -50,7 +51,7 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
     if not isinstance(y_axis, str):
         raise TypeError("The value of the argument 'y_axis' must be type of str.")
         
-    sample_stat_dict = calculate_boot_stats(sample, rep, level=ci_level, 
+    sample_stat_dict = strapPy.bootstrap.calculate_boot_stats(sample, rep, level=ci_level, 
                                             random_seed = ci_random_seed, pass_dist=True)
         
     plt.hist(sample_stat_dict[1], density=False, bins=bin_size)

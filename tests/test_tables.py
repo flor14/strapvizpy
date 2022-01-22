@@ -1,8 +1,8 @@
 import numpy as np
 from pytest import raises
-from straPy.bootstrap import bootstrap_distribution
-from straPy.bootstrap import calculate_boot_stats
-from straPy.data_vis import summary_tables
+from strapPy.bootstrap import bootstrap_distribution
+from strapPy.bootstrap import calculate_boot_stats
+from strapPy.data_vis import summary_tables
 
 def test_table_outputs():
     """Tests the functionality of the summary table function."""
