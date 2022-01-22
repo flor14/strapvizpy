@@ -14,7 +14,7 @@ The package will likely build on scipy's [stats module](https://docs.scipy.org/d
 ## Installation
 
 ```bash
-$ pip install --index-url https://test.pypi.org/simple/ strapPy
+$ pip install -i https://test.pypi.org/simple/ strappy
 ```
 
 ## Function Usage
