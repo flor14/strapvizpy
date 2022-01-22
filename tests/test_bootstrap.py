@@ -185,17 +185,34 @@ def test_calculate_boot_stats_errors():
 
     # tests with invalid input type of sample
     with raises(TypeError) as e:
-        calculate_boot_stats([1, 2, 3, 4], 1000, level='ninety-five', estimator="mean", random_seed=123)
+        calculate_boot_stats([1, 2, 3, 4],
+        1000,
+        level='ninety-five',
+        estimator="mean",
+        random_seed=123)
     assert str(e.value) == ("level should be of type 'float'")
 
     with raises(TypeError) as e:
-        calculate_boot_stats([1, 2, 3, 4], 1000, level=0.95, estimator="mean", random_seed=123, pass_dist='True')
+        calculate_boot_stats([1, 2, 3, 4],
+        1000,
+        level=0.95,
+        estimator="mean",
+        random_seed=123,
+        pass_dist='True')
     assert str(e.value) == ("pass_dist should be of type 'bool'")
 
     with raises(ValueError) as e:
-        calculate_boot_stats([1, 2, 3, 4], 1000, level=1.0, estimator="mean", random_seed=123)
+        calculate_boot_stats([1, 2, 3, 4],
+        1000,
+        level=1.0,
+        estimator="mean",
+        random_seed=123)
     assert str(e.value) == ("level should be between 0 and 1")
 
     with raises(ValueError) as e:
-        calculate_boot_stats([1, 2, 3, 4], 1000, level=0.0, estimator="mean", random_seed=123)
+        calculate_boot_stats([1, 2, 3, 4],
+        1000,
+        level=0.0,
+        estimator="mean",
+        random_seed=123)
     assert str(e.value) == ("level should be between 0 and 1")
