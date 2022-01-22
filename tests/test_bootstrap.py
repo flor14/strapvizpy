@@ -110,7 +110,7 @@ def test_calculate_boot_stats():
     """
     Tests functionality of calculate_boot_stats()
 
-    14 tests in total.
+    15 tests in total.
     """
     # test integration with bootstrap dist function
     test_dist = bootstrap_distribution(sample=[1, 2, 3],
