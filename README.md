@@ -1,4 +1,4 @@
-# strapPy
+# StrapPy
 
 ## Summary
 
@@ -8,7 +8,7 @@ The purpose of this package is to simplify and automate the process of creating 
 
 ## Package context within the Python ecosystem
 
-The package will likely build on scipy's [stats module](https://docs.scipy.org/doc/scipy/reference/stats.html), which allows one to conduct the boostrap sampling in the first place using the bootstrap method. strapPy will streamline and extend this process from the pure statistical process done in this module. sklearn has a utils module with a [resample](https://scikit-learn.org/stable/modules/generated/sklearn.utils.resample.html) method which also seems popular and achieves similar functionality. While we cannot be certain that one does not exist, there does not seem to be a package which streamlines the process from data to visualization and presentation as proposed in this document. Some tutorials on bootstrap confidence intervals from [machinelearningmastery.com](https://machinelearningmastery.com/calculate-bootstrap-confidence-intervals-machine-learning-results-python/) and [towardsdatascience.com](https://towardsdatascience.com/bootstrapping-using-python-and-r-b112bb4a969e) encourage the reader to plot the results manually.
+The package will likely build on scipy's [stats module](https://docs.scipy.org/doc/scipy/reference/stats.html), which allows one to conduct the boostrap sampling in the first place using the bootstrap method. StrapPy will streamline and extend this process from the pure statistical process done in this module. sklearn has a utils module with a [resample](https://scikit-learn.org/stable/modules/generated/sklearn.utils.resample.html) method which also seems popular and achieves similar functionality. While we cannot be certain that one does not exist, there does not seem to be a package which streamlines the process from data to visualization and presentation as proposed in this document. Some tutorials on bootstrap confidence intervals from [machinelearningmastery.com](https://machinelearningmastery.com/calculate-bootstrap-confidence-intervals-machine-learning-results-python/) and [towardsdatascience.com](https://towardsdatascience.com/bootstrapping-using-python-and-r-b112bb4a969e) encourage the reader to plot the results manually.
 
 
 ## Installation
@@ -29,8 +29,8 @@ Julien Gordon, Gautham Pughazhendhi, Zack Tang, and Margot Vore.
 
 ## License
 
-`strapPy` was created by Julien Gordon, Gautham Pughazhendhi, Zack Tang, Margot Vore. It is licensed under the terms of the MIT license.
+`StrapPy` was created by Julien Gordon, Gautham Pughazhendhi, Zack Tang, Margot Vore. It is licensed under the terms of the MIT license.
 
 ## Credits
 
-`strapPy` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
+`StrapPy` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
