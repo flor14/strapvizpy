@@ -113,7 +113,7 @@ def create_tables(stat, precision=2, estimator=True, alpha=True):
     Examples
     --------
     >>> st = calculate_boot_stats([1, 2, 3, 4], 1000, level=0.95, random_seed=123)
-    >>> stats_table, parameter_table  = summary_tables(st)
+    >>> stats_table, parameter_table  = create_tables(st)
     >>> stats_table
     >>> parameter_table
     """
