@@ -1,6 +1,6 @@
 import pandas as pd
-from strapPy.data_vis import histogram_ci_plot
-from strapPy.bootstrap import calculate_boot_stats, bootstrap_distribution
+from strappy.data_vis import histogram_ci_plot
+from strappy.bootstrap import calculate_boot_stats, bootstrap_distribution
 from pytest import raises
 import numpy as np
 import matplotlib.pyplot as plt
