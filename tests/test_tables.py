@@ -1,6 +1,5 @@
 import numpy as np
 from pytest import raises
-from strappy.bootstrap import bootstrap_distribution
 from strappy.bootstrap import calculate_boot_stats
 from strappy.display import summary_tables
 
@@ -45,8 +44,9 @@ def test_table_errors():
     
     with raises(TypeError) as e:
         summary_tables(6, precision=2, estimator=True, alpha=True)
-    assert str(e.value) == ("The stats parameter must be created from \
-calculate_boot_stats() function.")
+    assert str(e.value) == (
+        "The stats parameter must be created from "
+        "calculate_boot_stats() function.")
     
     st = calculate_boot_stats(np.random.randint(1, 20, 20), 1000,
                               level=0.95, random_seed=123)
@@ -56,16 +56,20 @@ calculate_boot_stats() function.")
     
     with raises(TypeError) as e:
         summary_tables(st, precision=2, estimator="Y", alpha=True)
-    assert str(e.value) == ("The estimator and alpha parameters must be \
-of type boolean.")
+    assert str(e.value) == (
+        "The estimator and alpha parameters must be of type boolean."
+    )
     
     with raises(TypeError) as e:
         summary_tables(st, precision=2, alpha=9)
-    assert str(e.value) == ("The estimator and alpha parameters must be \
-of type boolean.")
+    assert str(e.value) == (
+        "The estimator and alpha parameters must be of type boolean."
+    )
     
     del st["lower"]
     with raises(TypeError) as e:
         summary_tables(st, precision=2)
-    assert str(e.value) == ("The statistics dictionary is missing a key. \
-Please rerun calculate_boot_stats() function")
+    assert str(e.value) == (
+        "The statistics dictionary is missing a key. "
+        "Please rerun calculate_boot_stats() function"
+    )
