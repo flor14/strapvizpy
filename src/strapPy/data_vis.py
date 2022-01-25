@@ -81,7 +81,7 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
     
 
 
-def summary_tables(stat, precision=2, estimator=True, alpha=True):
+def create_tables(stat, precision=2, estimator=True, alpha=True):
     """Makes two tables that summerize the statistics from the bootstrapped 
     samples and the parameters for creating the bootstrapped samples.
 
