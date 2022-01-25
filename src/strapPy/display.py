@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from strappy.bootstrap import calculate_boot_stats
 
-def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
+def plot_ci(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
                       ci_random_seed=None, title = "", x_axis = "Bootstrap Sample Mean", 
                       y_axis = "Count"):
     
@@ -38,7 +38,7 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
     
     Examples
     --------
-    >>> histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000, n=100, ci_level=0.95, ci_random_seed=123)
+    >>> plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, n=100, ci_level=0.95, ci_random_seed=123)
     """
 
     if not isinstance(title, str):

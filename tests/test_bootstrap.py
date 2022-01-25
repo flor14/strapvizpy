@@ -1,6 +1,6 @@
 import numpy as np
 from pytest import raises
-from strapPy.bootstrap import bootstrap_distribution, calculate_boot_stats
+from strappy.bootstrap import bootstrap_distribution, calculate_boot_stats
 
 
 def test_bootstrap_distribution():
