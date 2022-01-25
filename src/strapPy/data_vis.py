@@ -157,9 +157,9 @@ Please rerun calculate_boot_stats() function")
         df["Significance Level"] = 1 - stat["level"]
         stats_table = df.style.format(
             precision=precision, formatter={("Significance Level"): "{:.3f}"}
-        ).hide_index()
+        ).hide(axis='index')
     else:
-        stats_table = df.style.format(precision=precision).hide_index()
+        stats_table = df.style.format(precision=precision).hide(axis='index')
 
     # set formatting and caption for table
     stats_table.set_caption(
@@ -181,7 +181,7 @@ font-size: 1.00em;"}],
 
     # set formatting and caption for table
     bs_params = df_bs.style.format(
-        precision=0, formatter={("Significance Level"): "{:.3f}"}).hide_index()
+        precision=0, formatter={("Significance Level"): "{:.3f}"}).hide(axis='index')
     
     bs_params.set_caption("Parameters used for bootstrapping").set_table_styles(
         [{"selector": "caption", "props": "caption-side: bottom; \
