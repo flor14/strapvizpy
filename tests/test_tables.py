@@ -5,7 +5,7 @@ from strapPy.bootstrap import calculate_boot_stats
     from strapPy.data_vis import create_tables
 
 def test_table_outputs():
-    """Tests the functionality of the summary table function."""
+    """Tests the functionality of the create_tables function."""
     
     st = calculate_boot_stats(np.random.randint(1, 20, 20), 1000,
                               level=0.95, random_seed=123)
