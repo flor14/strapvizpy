@@ -5,7 +5,7 @@ from strapPy.bootstrap import calculate_boot_stats
 from strapPy.data_vis import tabulate_stats
 
 def test_table_outputs():
-    """Tests the functionality of the summary table function."""
+    """Tests the functionality of the create_tables function."""
     
     st = calculate_boot_stats(np.random.randint(1, 20, 20), 1000,
                               level=0.95, random_seed=123)
@@ -41,7 +41,7 @@ def test_table_outputs():
     
     
 def test_table_errors():
-    "Tests the functionality of the summary table Raise Error statements."
+    "Tests the functionality of the create_tables Raise Error statements."
     
     with raises(TypeError) as e:
         tabulate_stats(6, precision=2, estimator=True, alpha=True)
