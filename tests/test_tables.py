@@ -41,7 +41,7 @@ def test_table_outputs():
     
     
 def test_table_errors():
-    "Tests the functionality of the summary table Raise Error statements."
+    "Tests the functionality of the create_tables Raise Error statements."
     
     with raises(TypeError) as e:
         create_tables(6, precision=2, estimator=True, alpha=True)
