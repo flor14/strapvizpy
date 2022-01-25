@@ -132,7 +132,7 @@ def calculate_boot_stats(sample, rep, n="auto", level=0.95, estimator="mean", ra
     """
 
     if not isinstance(level, float):
-        raise TypeError("level should be of type 'float")
+        raise TypeError("level should be of type 'float'")
 
     if not (level > 0 and level < 1):
         raise ValueError("level should be between 0 and 1")
