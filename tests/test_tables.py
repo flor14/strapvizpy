@@ -2,7 +2,7 @@ import numpy as np
 from pytest import raises
 from strappy.bootstrap import bootstrap_distribution
 from strappy.bootstrap import calculate_boot_stats
-from strappy.data_vis import summary_tables
+from strappy.display import summary_tables
 
 def test_table_outputs():
     """Tests the functionality of the summary table function."""
