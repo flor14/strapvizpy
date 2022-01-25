@@ -93,7 +93,7 @@ def plot_ci(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
     
 
 
-def summary_tables(stat, precision=2, estimator=True, alpha=True):
+def tabulate_stats(stat, precision=2, estimator=True, alpha=True):
     """Makes two tables that summerize the statistics from the bootstrapped 
     samples and the parameters for creating the bootstrapped samples.
 
@@ -125,7 +125,7 @@ def summary_tables(stat, precision=2, estimator=True, alpha=True):
     Examples
     --------
     >>> st = calculate_boot_stats([1, 2, 3, 4], 1000, level=0.95, random_seed=123)
-    >>> stats_table, parameter_table  = summary_tables(st)
+    >>> stats_table, parameter_table  = tabulate_stats(st)
     >>> stats_table
     >>> parameter_table
     """
