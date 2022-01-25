@@ -1,6 +1,6 @@
 import pandas as pd
-from strapPy.display import plot_ci
-from strapPy.bootstrap import calculate_boot_stats, bootstrap_distribution
+from strappy.display import plot_ci
+from strappy.bootstrap import calculate_boot_stats, bootstrap_distribution
 from pytest import raises
 import numpy as np
 import matplotlib.pyplot as plt
