@@ -1,11 +1,12 @@
+from turtle import st
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from strappy.bootstrap import calculate_boot_stats
 
-def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
-                      ci_random_seed=None, title = "", x_axis = "Bootstrap Sample Mean", 
-                      y_axis = "Count"):
+def plot_ci(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
+            ci_random_seed=None, title = "", x_axis = "Bootstrap Sample Mean", 
+            y_axis = "Count"):
     
     """Makes a histogram of a boostrapped sampling distribution 
     with its confidence interval and oberserved mean.
@@ -17,9 +18,11 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
     rep : int
         number of replicates of the distribution
     bin_size = int
-        a number of bins representing intervals of equal size over the range
+        a number of bins representing intervals of equal size
+        over the range
     n : str or int, default="auto"
-        bootstrap sample size, "auto" specifies using the same size as the sample
+        bootstrap sample size, "auto" specifies using the
+        same size as the sample
     ci_level : float, default=0.95
         confidence level
     ci_random_seed : None or int, default=None
@@ -34,24 +37,33 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
     Returns
     -------
     plot: histogram
-        histogram of bootstrap distribution with confidence interval and oberserved mean
+        histogram of bootstrap distribution with confidence interval
+        and oberserved mean
     
     Examples
     --------
-    >>> histogram_ci_plot([1, 2, 3, 4, 5, 6, 7], 1000, n=100, ci_level=0.95, ci_random_seed=123)
+    >>> plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, n=100, ci_level=0.95,
+                ci_random_seed=123)
     """
 
     if not isinstance(title, str):
-        raise TypeError("The value of the argument 'title' must be type of str.")
+        raise TypeError(
+            "The value of the argument 'title' must be type of str."
+        )
         
     if not isinstance(x_axis, str):
-        raise TypeError("The value of the argument 'x_axis' must be type of str.")
+        raise TypeError(
+            "The value of the argument 'x_axis' must be type of str."
+        )
         
     if not isinstance(y_axis, str):
-        raise TypeError("The value of the argument 'y_axis' must be type of str.")
+        raise TypeError(
+            "The value of the argument 'y_axis' must be type of str."
+        )
         
     sample_stat_dict = calculate_boot_stats(sample, rep, level=ci_level, 
-                                            random_seed = ci_random_seed, pass_dist=True)
+                                            n=n, random_seed = ci_random_seed,
+                                            pass_dist=True)
         
     plt.hist(sample_stat_dict[1], density=False, bins=bin_size)
     plt.axvline(sample_stat_dict[0]["lower"], color='k', linestyle='--')
@@ -81,7 +93,7 @@ def histogram_ci_plot(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
     
 
 
-def summary_tables(stat, precision=2, estimator=True, alpha=True):
+def tabulate_stats(stat, precision=2, estimator=True, alpha=True):
     """Makes two tables that summerize the statistics from the bootstrapped 
     samples and the parameters for creating the bootstrapped samples.
 
@@ -113,19 +125,22 @@ def summary_tables(stat, precision=2, estimator=True, alpha=True):
     Examples
     --------
     >>> st = calculate_boot_stats([1, 2, 3, 4], 1000, level=0.95, random_seed=123)
-    >>> stats_table, parameter_table  = summary_tables(st)
+    >>> stats_table, parameter_table  = tabulate_stats(st)
     >>> stats_table
     >>> parameter_table
     """
 
     if not(isinstance(stat, tuple) | isinstance(stat, dict)):
-        raise TypeError("The stats parameter must be created from \
-calculate_boot_stats() function.")
+        raise TypeError(
+            "The stats parameter must be created from "
+            "calculate_boot_stats() function."
+        )
     if not isinstance(precision, int):
         raise TypeError("The precision parameter must be of type int.")
     if not (isinstance(estimator, bool) & isinstance(alpha, bool)):
-        raise TypeError("The estimator and alpha parameters must be of \
-type boolean.")
+        raise TypeError(
+            "The estimator and alpha parameters must be of type boolean."
+        )
     
     if isinstance(stat, tuple):
         stat = stat[0]
@@ -140,8 +155,10 @@ type boolean.")
             ("sample_size" in dic_keys) &
             ("n" in dic_keys) &
             ("rep" in dic_keys)):
-        raise TypeError("The statistics dictionary is missing a key. \
-Please rerun calculate_boot_stats() function")
+        raise TypeError(
+            "The statistics dictionary is missing a key. "
+            "Please rerun calculate_boot_stats() function"
+        )
         
     # define the statistics table
     df = pd.DataFrame(data=np.array([(stat["lower"], stat["upper"],
@@ -157,17 +174,19 @@ Please rerun calculate_boot_stats() function")
         df["Significance Level"] = 1 - stat["level"]
         stats_table = df.style.format(
             precision=precision, formatter={("Significance Level"): "{:.3f}"}
-        ).hide_index()
+        )
     else:
-        stats_table = df.style.format(precision=precision).hide_index()
+        stats_table = df.style.format(precision=precision)
+
+    stats_table = stats_table.hide(axis="index")
 
     # set formatting and caption for table
     stats_table.set_caption(
         "Bootstrapping sample statistics from sample with "+
         str(stat["sample_size"]) + " records"
     ).set_table_styles(
-        [{"selector": "caption", "props": "caption-side: bottom; \
-font-size: 1.00em;"}],
+        [{"selector": "caption",
+          "props": "caption-side: bottom; font-size: 1.00em;"}],
         overwrite=False)
 
     # create bootstrapping parameter summary table
@@ -181,11 +200,16 @@ font-size: 1.00em;"}],
 
     # set formatting and caption for table
     bs_params = df_bs.style.format(
-        precision=0, formatter={("Significance Level"): "{:.3f}"}).hide_index()
+        precision=0,
+        formatter={("Significance Level"): "{:.3f}"}
+    ).hide(axis="index")
     
-    bs_params.set_caption("Parameters used for bootstrapping").set_table_styles(
-        [{"selector": "caption", "props": "caption-side: bottom; \
-font-size:1.00em;"}],
+    (bs_params
+    .set_caption("Parameters used for bootstrapping")
+    .set_table_styles(
+        [{"selector": "caption",
+          "props": "caption-side: bottom;font-size:1.00em;"}],
         overwrite=False)
+    )
 
     return stats_table, bs_params

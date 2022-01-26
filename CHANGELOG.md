@@ -4,4 +4,4 @@
 
 ## v0.1.0 (11/01/2022)
 
-- First release of `strapPy`!
+- First release of `strappy`!
