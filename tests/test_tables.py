@@ -7,7 +7,7 @@ def test_table_outputs():
     """Tests the functionality of the create_tables function."""
     
     st = calculate_boot_stats(np.random.randint(1, 20, 20), 1000,
-                              level=0.95, random_seed=123)
+                              level=0.95, random_seed=123, pass_dist=True)
     s, bs = tabulate_stats(st)
     assert s.data.shape[0] == 1, "Stats table should have 1 row"
     assert s.data.shape[1] == 5, "Stats table should have 5 columns"
@@ -73,3 +73,4 @@ def test_table_errors():
         "The statistics dictionary is missing a key. "
         "Please rerun calculate_boot_stats() function"
     )
+

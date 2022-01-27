@@ -1,3 +1,6 @@
+from logging import WARNING
+from warnings import WarningMessage, warn_explicit
+import warnings
 import numpy as np
 from pytest import raises
 from strappy.bootstrap import bootstrap_distribution, calculate_boot_stats
@@ -110,7 +113,7 @@ def test_calculate_boot_stats():
     """
     Tests functionality of calculate_boot_stats()
 
-    15 tests in total.
+    16 tests in total.
     """
     # test integration with bootstrap dist function
     test_dist = bootstrap_distribution(sample=[1, 2, 3],
@@ -216,3 +219,11 @@ def test_calculate_boot_stats_errors():
         estimator="mean",
         random_seed=123)
     assert str(e.value) == ("level should be between 0 and 1")
+
+    assert calculate_boot_stats([1, 2, 3, 4],
+        1000,
+        level=0.05,
+        estimator="mean",
+        random_seed=123)
+
+  
