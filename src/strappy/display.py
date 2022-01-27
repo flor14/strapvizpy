@@ -62,6 +62,11 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
         raise TypeError(
             "The value of the argument 'y_axis' must be type of str."
         )
+
+    if not isinstance(save_result_to, str):
+        raise TypeError(
+            "The value of the argument 'save_result_to' must be type of str."
+        )
         
     sample_stat_dict = calculate_boot_stats(sample, rep, level=ci_level, 
                                             n=n, random_seed = ci_random_seed,
