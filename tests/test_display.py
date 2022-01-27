@@ -69,5 +69,6 @@ def test_plot_ci():
     histogram = plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, 
                          n=100, 
                          ci_level=0.95, 
-                         ci_random_seed=123)
-    assert histogram.gcf().number > 0, "No chart was created"
+                         ci_random_seed=123,
+                         title="Bootstrap")
+    assert isinstance(histogram, tuple), "Chart was not created correctly"
