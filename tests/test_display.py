@@ -64,3 +64,10 @@ def test_plot_ci():
     assert str(e.value) == (
         "The value of the argument 'y_axis' must be type of str."
     )
+
+    #tests if a plot was drawn by the function
+    histogram = plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, 
+                         n=100, 
+                         ci_level=0.95, 
+                         ci_random_seed=123)
+    assert histogram.gcf().number > 0, "No chart was created"
