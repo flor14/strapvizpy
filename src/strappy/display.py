@@ -90,6 +90,7 @@ def plot_ci(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
     plt.title(title)
     plt.xlabel(x_axis)
     plt.ylabel(y_axis)
+    return plt
     
 
 
