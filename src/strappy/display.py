@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from strappy.bootstrap import calculate_boot_stats
 
-def plot_ci(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
-            ci_random_seed=None, title = "", x_axis = "Bootstrap Sample Mean", 
-            y_axis = "Count"):
+def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
+            ci_random_seed=None, title="", x_axis="Bootstrap Sample Mean", 
+            y_axis="Count", save_result_to=""):
     
     """Makes a histogram of a boostrapped sampling distribution 
     with its confidence interval and oberserved mean.
@@ -33,6 +33,8 @@ def plot_ci(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
         name of the x axis
     y_axis : str, default = "Count"
         name of the y axis
+    save_result_to : str, default = ""
+        specify the directory to save the figure as .png
     
     Returns
     -------
@@ -90,7 +92,7 @@ def plot_ci(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
     plt.title(title)
     plt.xlabel(x_axis)
     plt.ylabel(y_axis)
-    plt.savefig(title)
+    plt.savefig(save_result_to+title)
     return (plt, title)
     
 
