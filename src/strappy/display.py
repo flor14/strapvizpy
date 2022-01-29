@@ -1,10 +1,13 @@
-from turtle import st
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+from turtle import st
 from strappy.bootstrap import calculate_boot_stats
-import dataframe_image as dfi
-import os
+from warnings import simplefilter
+
+simplefilter(action='ignore', category=FutureWarning)
+
 
 def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
             ci_random_seed=None, title="", x_axis="Bootstrap Sample Mean", 
@@ -100,11 +103,12 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
     plt.xlabel(x_axis)
     plt.ylabel(y_axis)
     plt.savefig(save_result_to+title)
+    
     return (plt, title)
     
 
 
-def tabulate_stats(stat, precision=2, estimator=True, alpha=True,  path= None):
+def tabulate_stats(stat, precision=2, estimator=True, alpha=True, path=None):
     """Makes two tables that summerize the statistics from the bootstrapped 
     samples and the parameters for creating the bootstrapped samples. It also allows you
     to save the tables in html format. 
@@ -121,20 +125,21 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True,  path= None):
     alpha : boolean, default=True
         include the significance level in the summary statistics table
     path : str, default = None
-        specify a path to where tables should be saved.
+        specify a path to where the tex files of tables should be saved.
 
     Returns
     -------
-    summary statistics: style object
-        table summerizing the lower bound and upper bound of the confidence
-        interval,the standard error, the sampling statitic (if estimator = True),
-        and the significance level (if alpha = True). Style objects do not display
-        well in a python shell.
-    bootstrap parameters: style object
-        table  summerizing the parameters of the bootstrap sampling spficiying
-        the original sample size, number of repititions, the significance level,
-        and the number of samples in each bootstrap if its different from the
-        original sample size. Style objects do not display well in a python shell.
+    tuple :
+        summary statistics: style object
+            table summerizing the lower bound and upper bound of the confidence
+            interval,the standard error, the sampling statitic (if estimator = True),
+            and the significance level (if alpha = True). Style objects do not display
+            well in a python shell.
+        bootstrap parameters: style object
+            table  summerizing the parameters of the bootstrap sampling spficiying
+            the original sample size, number of repititions, the significance level,
+            and the number of samples in each bootstrap if its different from the
+            original sample size. Style objects do not display well in a python shell.
         
     Examples
     --------
@@ -158,10 +163,9 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True,  path= None):
     if not (isinstance(path, str) or path is None):
         raise TypeError("The path parameter must be a character string.")
         
-        
     if path is not None :
          if os.path.isdir(path) is False:
-            raise NameError("The folder path you specified was invalid")
+            raise NameError("The folder path you specified is invalid.")
     
     if isinstance(stat, tuple):
         stat = stat[0]
@@ -199,7 +203,7 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True,  path= None):
     else:
         stats_table = df.style.format(precision=precision)
 
-    stats_table = stats_table.hide(axis="index")
+    # stats_table = stats_table.hide(axis="index")
 
     # set formatting and caption for table
     stats_table.set_caption(
@@ -209,11 +213,6 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True,  path= None):
         [{"selector": "caption",
           "props": "caption-side: bottom; font-size: 1.00em;"}],
         overwrite=False)
-    
-    if path is not None:
-        stats_table.to_html(f"{path}sampling_statistics.html")
-    else :
-        stats_table.to_html("sampling_statistics.html")
             
     # create bootstrapping parameter summary table
     df_bs = pd.DataFrame(
@@ -239,8 +238,10 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True,  path= None):
     )
 
     if path is not None:
-        bs_params.to_html(f"{path}bootstrap_params.html") 
-    else:
-         bs_params.to_html("bootstrap_params.html") 
+        with open(f"{path}sampling_statistics.tex", "w") as tf:
+            tf.write(stats_table.to_latex())
+
+        with open(f"{path}bootstrap_params.tex", "w") as tf:
+            tf.write(bs_params.to_latex())
         
     return stats_table, bs_params

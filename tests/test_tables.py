@@ -77,7 +77,7 @@ def test_table_errors():
     with raises(NameError) as e:
         tabulate_stats(st,  path ="pt/")
     assert str(e.value) == (
-        "The folder path you specified was invalid"
+        "The folder path you specified is invalid."
     )
         
     with raises(TypeError) as e:
