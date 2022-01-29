@@ -98,9 +98,9 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
     plt.xlabel(x_axis)
     plt.ylabel(y_axis)
 
-    if path != None:
-        plt.savefig(path+title)
-        
+    if path is not None:
+        plt.savefig(path)
+
     return (plt, title)
     
 
