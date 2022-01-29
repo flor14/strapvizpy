@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
 from pytest import raises
-from bootpy.display import plot_ci, tabulate_stats
-from bootpy.bootstrap import calculate_boot_stats
+from strapvizpy.display import plot_ci, tabulate_stats
+from strapvizpy.bootstrap import calculate_boot_stats
 
 
 def test_plot_ci():

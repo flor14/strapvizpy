@@ -1,7 +1,7 @@
-# BootPy
+# StrapvizPy
 
-![example workflow](https://github.com/UBC-MDS/bootpy/actions/workflows/ci-cd.yml/badge.svg)
-[![codecov](https://codecov.io/gh/UBC-MDS/bootpy/branch/main/graph/badge.svg?token=ufgX4eYuYU)](https://codecov.io/gh/UBC-MDS/bootpy)
+![example workflow](https://github.com/UBC-MDS/strapvizpy/actions/workflows/ci-cd.yml/badge.svg)
+[![codecov](https://codecov.io/gh/UBC-MDS/strapvizpy/branch/main/graph/badge.svg?token=ufgX4eYuYU)](https://codecov.io/gh/UBC-MDS/strapvizpy)
 
 ## Summary
 
@@ -11,32 +11,32 @@ The purpose of this package is to simplify and automate the process of creating 
 
 ## Package context within the Python ecosystem
 
-The package will likely build on scipy's [stats module](https://docs.scipy.org/doc/scipy/reference/stats.html), which allows one to conduct the boostrap sampling in the first place using the bootstrap method. bootpy will streamline and extend this process from the pure statistical process done in this module. sklearn has a utils module with a [resample](https://scikit-learn.org/stable/modules/generated/sklearn.utils.resample.html) method which also seems popular and achieves similar functionality. While we cannot be certain that one does not exist, there does not seem to be a package which streamlines the process from data to visualization and presentation as proposed in this document. Some tutorials on bootstrap confidence intervals from [machinelearningmastery.com](https://machinelearningmastery.com/calculate-bootstrap-confidence-intervals-machine-learning-results-python/) and [towardsdatascience.com](https://towardsdatascience.com/bootstrapping-using-python-and-r-b112bb4a969e) encourage the reader to plot the results manually.
+The package will likely build on scipy's [stats module](https://docs.scipy.org/doc/scipy/reference/stats.html), which allows one to conduct the boostrap sampling in the first place using the bootstrap method. strapvizpy will streamline and extend this process from the pure statistical process done in this module. sklearn has a utils module with a [resample](https://scikit-learn.org/stable/modules/generated/sklearn.utils.resample.html) method which also seems popular and achieves similar functionality. While we cannot be certain that one does not exist, there does not seem to be a package which streamlines the process from data to visualization and presentation as proposed in this document. Some tutorials on bootstrap confidence intervals from [machinelearningmastery.com](https://machinelearningmastery.com/calculate-bootstrap-confidence-intervals-machine-learning-results-python/) and [towardsdatascience.com](https://towardsdatascience.com/bootstrapping-using-python-and-r-b112bb4a969e) encourage the reader to plot the results manually.
 
 
 ## Installation
 
 ```bash
-$ pip install bootpy
+$ pip install strapvizpy
 ```
 
 ## Usage
 
-To import bootpy and check the version:
+To import strapvizpy and check the version:
 
 ```python
-import bootpy
-print(bootpy.__version__)
+import strapvizpy
+print(strapvizpy.__version__)
 ```
 
 To import the suite of functions:
 
 ```python
-from bootpy import bootstrap
-from bootpy import display
+from strapvizpy import bootstrap
+from strapvizpy import display
 ```
 
-Please view our packaged documentation [here](https://bootpy.readthedocs.io/en/latest/).
+Please view our packaged documentation [here](https://strapvizpy.readthedocs.io/en/latest/).
 
 ## Functions
 
@@ -50,8 +50,8 @@ Julien Gordon, Gautham Pughazhendhi, Zack Tang, and Margot Vore.
 
 ## License
 
-`BootPy` was created by Julien Gordon, Gautham Pughazhendhi, Zack Tang, Margot Vore. It is licensed under the terms of the MIT license.
+`StrapvizPy` was created by Julien Gordon, Gautham Pughazhendhi, Zack Tang, Margot Vore. It is licensed under the terms of the MIT license.
 
 ## Credits
 
-`BootPy` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
+`StrapvizPy` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).

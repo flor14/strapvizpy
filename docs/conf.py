@@ -6,7 +6,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u"bootpy"
+project = u"strapvizpy"
 copyright = u"2022, Julien Gordon, Gautham Pughazhendhi, Zack Tang, Margot Vore"
 author = u"Julien Gordon, Gautham Pughazhendhi, Zack Tang, Margot Vore"
 
