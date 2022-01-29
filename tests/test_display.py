@@ -110,5 +110,6 @@ def test_plot_ci():
                          n=100, 
                          ci_level=0.95, 
                          ci_random_seed=123,
-                         title="Bootstrap")
+                         title="Bootstrap",
+                         path="Users")
     assert histogram.gcf().number > 0, "Chart was not created correctly"
