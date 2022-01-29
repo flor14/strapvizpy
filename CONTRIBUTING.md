@@ -69,5 +69,5 @@ Before you submit a pull request, check that it meets these guidelines:
 
 ## Code of Conduct
 
-Please note that the `bootpy` project is released with a 
+Please note that the `BootPy` project is released with a 
 [`Code of Conduct`](https://github.com/UBC-MDS/bootpy/blob/main/CONTRIBUTING.md). By contributing to this project you agree to abide by its terms.
