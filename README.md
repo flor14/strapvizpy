@@ -2,6 +2,7 @@
 
 ![example workflow](https://github.com/UBC-MDS/strapvizpy/actions/workflows/ci-cd.yml/badge.svg)
 [![codecov](https://codecov.io/gh/UBC-MDS/strapvizpy/branch/main/graph/badge.svg?token=ufgX4eYuYU)](https://codecov.io/gh/UBC-MDS/strapvizpy)
+[![Documentation Status](https://readthedocs.org/projects/strapvizpy/badge/?version=latest)](https://strapvizpy.readthedocs.io/en/latest/?badge=latest)
 
 ## Summary
 
