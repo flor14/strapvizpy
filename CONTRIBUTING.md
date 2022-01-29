@@ -40,10 +40,10 @@ If you are proposing a feature:
 
 ## Get Started!
 
-Ready to contribute? Here's how to set up `strappy` for local development.
+Ready to contribute? Here's how to set up `bootpy` for local development.
 
-1. Download a copy of `strappy` locally.
-2. Install `strappy` using `poetry`:
+1. Download a copy of `bootpy` locally.
+2. Install `bootpy` using `poetry`:
 
     ```console
     $ poetry install
@@ -69,5 +69,5 @@ Before you submit a pull request, check that it meets these guidelines:
 
 ## Code of Conduct
 
-Please note that the `strappy` project is released with a 
-[`Code of Conduct`](https://github.com/UBC-MDS/strappy/blob/main/CONTRIBUTING.md). By contributing to this project you agree to abide by its terms.
+Please note that the `BootPy` project is released with a 
+[`Code of Conduct`](https://github.com/UBC-MDS/bootpy/blob/main/CONTRIBUTING.md). By contributing to this project you agree to abide by its terms.
