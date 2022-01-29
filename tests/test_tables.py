@@ -75,7 +75,7 @@ def test_table_errors():
     )
     
     with raises(NameError) as e:
-        tabulate_stats(st, save= True,  folder_path ="pt/")
+        tabulate_stats(st, save= True,  path ="pt/")
     assert str(e.value) == (
         "The folder path you specified was invalid"
     )
@@ -87,7 +87,7 @@ def test_table_errors():
     )
         
     with raises(TypeError) as e:
-        tabulate_stats(st,folder_path = 1)
+        tabulate_stats(st, path = 1)
     assert str(e.value) == (
-        "The folder_path parameter must be a character string."
+        "The path parameter must be a character string."
     )
