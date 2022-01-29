@@ -1,9 +1,9 @@
-import pandas as pd
-from strappy.display import plot_ci
-from strappy.bootstrap import calculate_boot_stats, bootstrap_distribution
-from pytest import raises
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
+from pytest import raises
+from strappy.display import plot_ci, tabulate_stats
+from strappy.bootstrap import calculate_boot_stats
 
 
 def test_plot_ci():
@@ -109,8 +109,7 @@ def test_plot_ci():
                          n=100, 
                          ci_level=0.95, 
                          ci_random_seed=123,
-                         title="Bootstrap",
-                         path="./")
+                         title="Bootstrap")
     assert histogram.gcf().number > 0, "Chart was not created correctly"
 
     # tests with invalid input value of path
@@ -118,4 +117,88 @@ def test_plot_ci():
         plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, path="Users/")
     assert str(e.value) == (
         "The folder path you specified is invalid."
+    )
+
+
+def test_table_outputs():
+    """Tests the functionality of the create_tables function."""
+    
+    st = calculate_boot_stats(np.random.randint(1, 20, 20), 1000,
+                              level=0.95, random_seed=123, pass_dist=True)
+    s, bs = tabulate_stats(st)
+    assert s.data.shape[0] == 1, "Stats table should have 1 row"
+    assert s.data.shape[1] == 5, "Stats table should have 5 columns"
+    assert bs.data.shape[0] == 1, "Parameter table should have 1 row"
+    assert bs.data.shape[1] == 3, "Parameter table should have 3 columns"
+    
+    s, bs = tabulate_stats(st, estimator=False, alpha=False)
+    assert s.data.shape[0] == 1, "Stats table should have 1 row"
+    assert s.data.shape[1] == 3, "Stats table should have 3 columns"
+    assert bs.data.shape[0] == 1, "Parameter table should have 1 row"
+    assert bs.data.shape[1] == 3, "Parameter table should have 3 columns"
+    
+    s, bs = tabulate_stats(st, alpha=False)
+    assert s.data.shape[0] == 1, "Stats table should have 1 row"
+    assert s.data.shape[1] == 4, "Stats table should have 4 columns"
+    assert bs.data.shape[0] == 1, "Parameter table should have 1 row"
+    assert bs.data.shape[1] == 3, "Parameter table should have 3 columns"
+    
+    st = calculate_boot_stats(np.random.randint(1, 20, 20), 1000,
+                              level=0.95, random_seed=123, n=10)
+    s, bs = tabulate_stats(st)
+    assert bs.data.shape[0] == 1, "Parameter table should have 1 row"
+    assert bs.data.shape[1] == 4, "Parameter table should have 4 columns"
+    
+    st = calculate_boot_stats(np.random.randint(1, 20, 20), 1000,
+                              level=0.95, random_seed=123, n=10,
+                              estimator="median")
+    s, bs = tabulate_stats(st)
+    assert ("Sample median" in s.data.columns), "Test Statistic name incorrect"
+    
+    
+def test_table_errors():
+    "Tests the functionality of the create_tables Raise Error statements."
+    
+    with raises(TypeError) as e:
+        tabulate_stats(6, precision=2, estimator=True, alpha=True)
+    assert str(e.value) == (
+        "The stats parameter must be created from "
+        "calculate_boot_stats() function.")
+    
+    st = calculate_boot_stats(np.random.randint(1, 20, 20), 1000,
+                              level=0.95, random_seed=123)
+    with raises(TypeError) as e:
+        tabulate_stats(st, precision=2.9, estimator=True, alpha=True)
+    assert str(e.value) == "The precision parameter must be of type int."
+    
+    with raises(TypeError) as e:
+        tabulate_stats(st, precision=2, estimator="Y", alpha=True)
+    assert str(e.value) == (
+        "The estimator and alpha parameters must be of type boolean."
+    )
+    
+    with raises(TypeError) as e:
+        tabulate_stats(st, precision=2, alpha=9)
+    assert str(e.value) == (
+        "The estimator and alpha parameters must be of type boolean."
+    )
+    
+    del st["lower"]
+    with raises(TypeError) as e:
+        tabulate_stats(st, precision=2)
+    assert str(e.value) == (
+        "The statistics dictionary is missing a key. "
+        "Please rerun calculate_boot_stats() function"
+    )
+    
+    with raises(NameError) as e:
+        tabulate_stats(st,  path ="pt/")
+    assert str(e.value) == (
+        "The folder path you specified is invalid."
+    )
+        
+    with raises(TypeError) as e:
+        tabulate_stats(st, path = 1)
+    assert str(e.value) == (
+        "The path parameter must be a character string."
     )
