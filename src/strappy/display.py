@@ -2,11 +2,8 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from turtle import st
 from strappy.bootstrap import calculate_boot_stats
-from warnings import simplefilter
 
-simplefilter(action='ignore', category=FutureWarning)
 
 def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
             ci_random_seed=None, title="", x_axis="Bootstrap Sample Mean", 
