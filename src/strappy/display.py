@@ -104,7 +104,7 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
     
 
 
-def tabulate_stats(stat, precision=2, estimator=True, alpha=True,  save = False, path= None):
+def tabulate_stats(stat, precision=2, estimator=True, alpha=True,  path= None):
     """Makes two tables that summerize the statistics from the bootstrapped 
     samples and the parameters for creating the bootstrapped samples. It also allows you
     to save the tables in html format. 
@@ -120,8 +120,6 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True,  save = False,
         include the bootstrap estimate in the summary statistics table
     alpha : boolean, default=True
         include the significance level in the summary statistics table
-    save : boolean, default=False
-        indicates if you want to save tables to html files
     path : str, default = None
         specify a path to where tables should be saved.
 
@@ -160,10 +158,8 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True,  save = False,
     if not (isinstance(path, str) or path is None):
         raise TypeError("The path parameter must be a character string.")
         
-    if not isinstance(save, bool):
-        raise TypeError("The save parameter must be of type boolean.")  
         
-    if path != None :
+    if path is not None :
          if os.path.isdir(path) is False:
             raise NameError("The folder path you specified was invalid")
     
@@ -214,11 +210,10 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True,  save = False,
           "props": "caption-side: bottom; font-size: 1.00em;"}],
         overwrite=False)
     
-    if (save == True or path != None):
-        if path != None :
-            stats_table.to_html(f"{path}sampling_statistics.html")
-        else :
-            stats_table.to_html("sampling_statistics.html")
+    if path is not None:
+        stats_table.to_html(f"{path}sampling_statistics.html")
+    else :
+        stats_table.to_html("sampling_statistics.html")
             
     # create bootstrapping parameter summary table
     df_bs = pd.DataFrame(
@@ -243,10 +238,9 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True,  save = False,
         overwrite=False)
     )
 
-    if (save == True or path != None):
-        if path != None:
-            bs_params.to_html(f"{path}bootstrap_params.html") 
-        else:
-             bs_params.to_html("bootstrap_params.html") 
+    if path is not None:
+        bs_params.to_html(f"{path}bootstrap_params.html") 
+    else:
+         bs_params.to_html("bootstrap_params.html") 
         
     return stats_table, bs_params

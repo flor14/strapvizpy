@@ -75,15 +75,9 @@ def test_table_errors():
     )
     
     with raises(NameError) as e:
-        tabulate_stats(st, save= True,  path ="pt/")
+        tabulate_stats(st,  path ="pt/")
     assert str(e.value) == (
         "The folder path you specified was invalid"
-    )
-
-    with raises(TypeError) as e:
-        tabulate_stats(st, save= "yes")
-    assert str(e.value) == (
-        "The save parameter must be of type boolean." 
     )
         
     with raises(TypeError) as e:
