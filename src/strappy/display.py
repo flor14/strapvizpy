@@ -107,7 +107,7 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
     plt.ylabel(y_axis)
 
     if path is not None:
-        plt.savefig(path+"bootstrap_histogram.png")
+        plt.savefig(f"{path}bootstrap_histogram.png")
 
     return plt
     
