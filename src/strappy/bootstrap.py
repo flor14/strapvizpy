@@ -140,6 +140,10 @@ def calculate_boot_stats(sample, rep, n="auto", level=0.95, estimator="mean", ra
     if not isinstance(pass_dist, bool):
         raise TypeError("pass_dist should be of type 'bool'")
 
+    if level < 0.7:
+        warnings.warn("Warning: chosen level is quite \
+            low--level is a confidence level, not a signficance level")
+
     # get the bootstrapped mean vector
     dist = bootstrap_distribution(sample=sample,
                                   rep=rep,
