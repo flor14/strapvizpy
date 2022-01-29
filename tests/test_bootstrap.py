@@ -226,5 +226,3 @@ def test_calculate_boot_stats_errors():
                             1000,
                             level=0.05)
     assert w
-
-  
