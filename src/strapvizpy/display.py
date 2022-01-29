@@ -2,7 +2,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from bootpy.bootstrap import calculate_boot_stats
+from strapvizpy.bootstrap import calculate_boot_stats
 
 
 def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,

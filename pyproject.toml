@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "bootpy"
-version = "0.1.10"
+name = "strapvizpy"
+version = "0.2.0"
 description = "Performs bootstrapping of a dataset to produce plots and statistics for use in final reports and documents. "
 authors = ["Julien Gordon, Gautham Pughazhendhi, Zack Tang, Margot Vore"]
 license = "MIT"
