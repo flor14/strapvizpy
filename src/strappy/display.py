@@ -1,12 +1,13 @@
-from turtle import st
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from strappy.bootstrap import calculate_boot_stats
 
-def plot_ci(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
-            ci_random_seed=None, title = "", x_axis = "Bootstrap Sample Mean", 
-            y_axis = "Count"):
+
+def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
+            ci_random_seed=None, title="", x_axis="Bootstrap Sample Mean", 
+            y_axis="Count", path=None):
     
     """Makes a histogram of a boostrapped sampling distribution 
     with its confidence interval and oberserved mean.
@@ -33,6 +34,8 @@ def plot_ci(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
         name of the x axis
     y_axis : str, default = "Count"
         name of the y axis
+    path : None or str, default = None
+        specify the directory to save the figure as .png
     
     Returns
     -------
@@ -43,7 +46,7 @@ def plot_ci(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
     Examples
     --------
     >>> plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, n=100, ci_level=0.95,
-                ci_random_seed=123)
+                ci_random_seed=123, title="Bootstrap")
     """
 
     if not isinstance(title, str):
@@ -60,7 +63,16 @@ def plot_ci(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
         raise TypeError(
             "The value of the argument 'y_axis' must be type of str."
         )
+
+    if not (isinstance(path, str) or path == None):
+        raise TypeError(
+            "The value of the argument 'path' must be type of str or None."
+        )
         
+    if path is not None :
+        if os.path.isdir(path) is False:
+            raise NameError("The folder path you specified is invalid.")
+
     sample_stat_dict = calculate_boot_stats(sample, rep, level=ci_level, 
                                             n=n, random_seed = ci_random_seed,
                                             pass_dist=True)
@@ -90,12 +102,18 @@ def plot_ci(sample, rep, bin_size = 30, n="auto", ci_level=0.95,
     plt.title(title)
     plt.xlabel(x_axis)
     plt.ylabel(y_axis)
+
+    if path is not None:
+        plt.savefig(f"{path}bootstrap_histogram.png")
+
+    return plt
     
 
 
-def tabulate_stats(stat, precision=2, estimator=True, alpha=True):
+def tabulate_stats(stat, precision=2, estimator=True, alpha=True, path=None):
     """Makes two tables that summerize the statistics from the bootstrapped 
-    samples and the parameters for creating the bootstrapped samples.
+    samples and the parameters for creating the bootstrapped samples. It also allows you
+    to save the tables in html format. 
 
 
     Parameters
@@ -106,21 +124,24 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True):
         the precision of the table values
     estimator : boolean, default=True
         include the bootstrap estimate in the summary statistics table
-    alpha: boolean, default=True
+    alpha : boolean, default=True
         include the significance level in the summary statistics table
+    path : str, default = None
+        specify a path to where the tex files of tables should be saved.
 
     Returns
     -------
-    summary statistics: style object
-        table summerizing the lower bound and upper bound of the confidence
-        interval,the standard error, the sampling statitic (if estimator = True),
-        and the significance level (if alpha = True). Style objects do not display
-        well in a python shell.
-    bootstrap parameters: style object
-        table  summerizing the parameters of the bootstrap sampling spficiying
-        the original sample size, number of repititions, the significance level,
-        and the number of samples in each bootstrap if its different from the
-        original sample size. Style objects do not display well in a python shell.
+    tuple :
+        summary statistics: style object
+            table summerizing the lower bound and upper bound of the confidence
+            interval,the standard error, the sampling statitic (if estimator = True),
+            and the significance level (if alpha = True). Style objects do not display
+            well in a python shell.
+        bootstrap parameters: style object
+            table  summerizing the parameters of the bootstrap sampling spficiying
+            the original sample size, number of repititions, the significance level,
+            and the number of samples in each bootstrap if its different from the
+            original sample size. Style objects do not display well in a python shell.
         
     Examples
     --------
@@ -141,6 +162,12 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True):
         raise TypeError(
             "The estimator and alpha parameters must be of type boolean."
         )
+    if not (isinstance(path, str) or path is None):
+        raise TypeError("The path parameter must be a character string.")
+        
+    if path is not None :
+         if os.path.isdir(path) is False:
+            raise NameError("The folder path you specified is invalid.")
     
     if isinstance(stat, tuple):
         stat = stat[0]
@@ -188,7 +215,7 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True):
         [{"selector": "caption",
           "props": "caption-side: bottom; font-size: 1.00em;"}],
         overwrite=False)
-
+            
     # create bootstrapping parameter summary table
     df_bs = pd.DataFrame(
         data=np.array(
@@ -212,4 +239,11 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True):
         overwrite=False)
     )
 
+    if path is not None:
+        with open(f"{path}sampling_statistics.tex", "w") as tf:
+            tf.write(stats_table.to_latex())
+
+        with open(f"{path}bootstrap_params.tex", "w") as tf:
+            tf.write(bs_params.to_latex())
+        
     return stats_table, bs_params

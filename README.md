@@ -1,10 +1,17 @@
 # StrapPy
 
+![example workflow](https://github.com/UBC-MDS/strappy/actions/workflows/ci-cd.yml/badge.svg)
+[![codecov](https://codecov.io/gh/UBC-MDS/strappy/branch/main/graph/badge.svg?token=ufgX4eYuYU)](https://codecov.io/gh/UBC-MDS/strappy)
+
 ## Summary
 
 Performs bootstrapping of a dataset column to produce plots and statistics for use in final reports and documents.
 
 The purpose of this package is to simplify and automate the process of creating simple bootstrap distributions of numerical data columns. The package will have a module which intakes a dataset column and relevant parameters such as the desired confidence bounds and number of simulations. The module will perform the simulation statistics to generate the bootstrap mean distribution and relevant statistics such as the sample mean and bootstrapped confidence interval. The package will also contain a module for visualization of the bootstraped confidence interval, and a module for creating a professional publication-ready table of the relevant statistics.
+
+## Online Documentation
+
+Please view our packaged documentation [here](https://strappy-bootstrapping-made-easy.readthedocs.io/en/latest/index.html).
 
 ## Package context within the Python ecosystem
 
@@ -14,15 +21,31 @@ The package will likely build on scipy's [stats module](https://docs.scipy.org/d
 ## Installation
 
 ```bash
-$ pip install -i https://test.pypi.org/simple/ strappy
+$ pip install strappy
 ```
 
-## Function Usage
+## Usage
 
-- **bootstrap_distribution:** A sampling distribution of `rep` replicates is generated for a specified estimator with replacement for a given bootstrap sample size.  
-- **calculate_boot_stats:** Calculates a confidence interval for a given sampling distribution as well as other bootstapped statistics.  
-- **plot_ci:** Makes a histogram of a boostrapped sampling distribution with its confidence interval and oberserved sample statistic.  
-- **tabulate_stats:** Generates a table that contains a given sampling distribution's mean and standard deviation along with relevant statistics as well as a summary table of the bootstrap distributions parameters  
+To import strappy and check the version:
+
+```python
+import strappy
+print(strappy.__version__)
+```
+
+To import the suite of functions:
+
+```python
+from strappy import bootstrap
+from strappy import display
+```
+
+## Functions
+
+- `bootstrap_distribution`: Returns a sampling distribution of specified replicates is generated for a specified estimator with replacement for a given bootstrap sample size.  
+- `calculate_boot_stats`: Calculates a confidence interval for a given sampling distribution as well as other bootstrapped statistics.  
+- `plot_ci`: Creates a histogram of a bootstrapped sampling distribution with its confidence interval and observed sample statistic.  
+- `tabulate_stats`: Generates a table that contains a given sampling distribution's mean and standard deviation along with relevant statistics as well as a summary table of the bootstrap distributions parameters. The code automatically saves the tables as html documents.
 
 ## Contributing
 Julien Gordon, Gautham Pughazhendhi, Zack Tang, and Margot Vore.
