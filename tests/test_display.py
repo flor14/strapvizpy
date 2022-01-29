@@ -108,7 +108,8 @@ def test_plot_ci():
                          n=100, 
                          ci_level=0.95, 
                          ci_random_seed=123,
-                         title="Bootstrap")
+                         title="Bootstrap",
+                         path="./tests/")
     assert histogram.gcf().number > 0, "Chart was not created correctly"
 
     # tests with invalid input value of path
@@ -180,6 +181,10 @@ def test_table_errors():
         tabulate_stats(st, precision=2, alpha=9)
     assert str(e.value) == (
         "The estimator and alpha parameters must be of type boolean."
+    )
+
+    assert len(tabulate_stats(st,  path ="./tests/")) == 2, (
+        "The output length is not correct"
     )
     
     del st["lower"]
