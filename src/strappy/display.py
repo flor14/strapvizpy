@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from strappy.bootstrap import calculate_boot_stats
+import os
 
 def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
             ci_random_seed=None, title="", x_axis="Bootstrap Sample Mean", 
@@ -68,6 +69,10 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
             "The value of the argument 'path' must be type of str or None."
         )
         
+    if path is not None :
+        if os.path.isdir(path) is False:
+            raise NameError("The folder path you specified is invalid.")
+
     sample_stat_dict = calculate_boot_stats(sample, rep, level=ci_level, 
                                             n=n, random_seed = ci_random_seed,
                                             pass_dist=True)
@@ -99,9 +104,9 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
     plt.ylabel(y_axis)
 
     if path is not None:
-        plt.savefig(path)
+        plt.savefig(path+"bootstrap_histogram.png")
 
-    return (plt)
+    return plt
     
 
 
