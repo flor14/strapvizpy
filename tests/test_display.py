@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from pytest import raises
 from strappy.display import plot_ci, tabulate_stats
 from strappy.bootstrap import calculate_boot_stats
