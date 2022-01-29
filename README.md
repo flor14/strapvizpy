@@ -1,5 +1,8 @@
 # StrapPy
 
+![example workflow](https://github.com/UBC-MDS/strappy/actions/workflows/ci-cd.yml/badge.svg)
+[![codecov](https://codecov.io/gh/UBC-MDS/strappy/branch/main/graph/badge.svg?token=ufgX4eYuYU)](https://codecov.io/gh/UBC-MDS/strappy)
+
 ## Summary
 
 Performs bootstrapping of a dataset column to produce plots and statistics for use in final reports and documents.
