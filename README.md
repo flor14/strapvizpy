@@ -45,7 +45,7 @@ from strappy import display
 - `bootstrap_distribution`: Returns a sampling distribution of specified replicates is generated for a specified estimator with replacement for a given bootstrap sample size.  
 - `calculate_boot_stats`: Calculates a confidence interval for a given sampling distribution as well as other bootstrapped statistics.  
 - `plot_ci`: Creates a histogram of a bootstrapped sampling distribution with its confidence interval and observed sample statistic.  
-- `tabulate_stats`: Generates a table that contains a given sampling distribution's mean and standard deviation along with relevant statistics as well as a summary table of the bootstrap distributions parameters.
+- `tabulate_stats`: Generates a table that contains a given sampling distribution's mean and standard deviation along with relevant statistics as well as a summary table of the bootstrap distributions parameters. The code automatically saves the tables as html documents.
 
 ## Contributing
 Julien Gordon, Gautham Pughazhendhi, Zack Tang, and Margot Vore.
