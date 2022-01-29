@@ -2,11 +2,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from turtle import st
 from strappy.bootstrap import calculate_boot_stats
-from warnings import simplefilter
-
-simplefilter(action='ignore', category=FutureWarning)
 
 
 def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
@@ -73,6 +69,10 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
             "The value of the argument 'path' must be type of str or None."
         )
         
+    if path is not None :
+        if os.path.isdir(path) is False:
+            raise NameError("The folder path you specified is invalid.")
+
     sample_stat_dict = calculate_boot_stats(sample, rep, level=ci_level, 
                                             n=n, random_seed = ci_random_seed,
                                             pass_dist=True)
@@ -104,9 +104,9 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
     plt.ylabel(y_axis)
 
     if path is not None:
-        plt.savefig(path)
+        plt.savefig(f"{path}bootstrap_histogram.png")
 
-    return (plt, title)
+    return plt
     
 
 

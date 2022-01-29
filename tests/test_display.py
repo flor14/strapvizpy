@@ -104,11 +104,18 @@ def test_plot_ci():
         "The value of the argument 'path' must be type of str or None."
     )
 
-
     #tests if a plot was drawn by the function
     histogram = plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, 
                          n=100, 
                          ci_level=0.95, 
                          ci_random_seed=123,
-                         title="Bootstrap")
-    assert isinstance(histogram, tuple), "Chart was not created correctly"
+                         title="Bootstrap",
+                         path="./")
+    assert histogram.gcf().number > 0, "Chart was not created correctly"
+
+    # tests with invalid input value of path
+    with raises(NameError) as e:
+        plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, path="Users/")
+    assert str(e.value) == (
+        "The folder path you specified is invalid."
+    )
