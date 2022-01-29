@@ -101,7 +101,7 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
     if path is not None:
         plt.savefig(path)
 
-    return (plt)
+    return plt
     
 
 
