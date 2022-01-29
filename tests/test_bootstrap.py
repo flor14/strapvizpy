@@ -3,6 +3,7 @@ from warnings import WarningMessage, warn_explicit
 import warnings
 import numpy as np
 from pytest import raises
+import pytest
 from strappy.bootstrap import bootstrap_distribution, calculate_boot_stats
 
 
@@ -220,10 +221,8 @@ def test_calculate_boot_stats_errors():
         random_seed=123)
     assert str(e.value) == ("level should be between 0 and 1")
 
-    assert calculate_boot_stats([1, 2, 3, 4],
-        1000,
-        level=0.05,
-        estimator="mean",
-        random_seed=123)
-
-  
+    with pytest.warns(UserWarning) as w:
+        calculate_boot_stats([1, 2, 3, 4],
+                            1000,
+                            level=0.05)
+    assert w

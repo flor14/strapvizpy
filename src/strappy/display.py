@@ -11,7 +11,7 @@ simplefilter(action='ignore', category=FutureWarning)
 
 def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
             ci_random_seed=None, title="", x_axis="Bootstrap Sample Mean", 
-            y_axis="Count", save_result_to=""):
+            y_axis="Count", path=None):
     
     """Makes a histogram of a boostrapped sampling distribution 
     with its confidence interval and oberserved mean.
@@ -38,7 +38,7 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
         name of the x axis
     y_axis : str, default = "Count"
         name of the y axis
-    save_result_to : str, default = ""
+    path : None or str, default = None
         specify the directory to save the figure as .png
     
     Returns
@@ -68,9 +68,9 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
             "The value of the argument 'y_axis' must be type of str."
         )
 
-    if not isinstance(save_result_to, str):
+    if not (isinstance(path, str) or path == None):
         raise TypeError(
-            "The value of the argument 'save_result_to' must be type of str."
+            "The value of the argument 'path' must be type of str or None."
         )
         
     sample_stat_dict = calculate_boot_stats(sample, rep, level=ci_level, 
@@ -102,8 +102,10 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
     plt.title(title)
     plt.xlabel(x_axis)
     plt.ylabel(y_axis)
-    plt.savefig(save_result_to+title)
-    
+
+    if path is not None:
+        plt.savefig(path)
+
     return (plt, title)
     
 
