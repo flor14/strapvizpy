@@ -73,4 +73,21 @@ def test_table_errors():
         "The statistics dictionary is missing a key. "
         "Please rerun calculate_boot_stats() function"
     )
+    
+    with raises(NameError) as e:
+        tabulate_stats(st, save= True,  folder_path ="pt/")
+    assert str(e.value) == (
+        "The folder path you specified was invalid"
+    )
 
+    with raises(TypeError) as e:
+        tabulate_stats(st, save= "yes")
+    assert str(e.value) == (
+        "The save parameter must be of type boolean." 
+    )
+        
+    with raises(TypeError) as e:
+        tabulate_stats(st,folder_path = 1)
+    assert str(e.value) == (
+        "The folder_path parameter must be a character string."
+    )

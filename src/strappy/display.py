@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from strappy.bootstrap import calculate_boot_stats
+import dataframe_image as dfi
+import os
 
 def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
             ci_random_seed=None, title="", x_axis="Bootstrap Sample Mean", 
@@ -102,9 +104,10 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
     
 
 
-def tabulate_stats(stat, precision=2, estimator=True, alpha=True):
+def tabulate_stats(stat, precision=2, estimator=True, alpha=True,  save = False, folder_path= ""):
     """Makes two tables that summerize the statistics from the bootstrapped 
-    samples and the parameters for creating the bootstrapped samples.
+    samples and the parameters for creating the bootstrapped samples. It also allows you
+    to save the tables in html format. 
 
 
     Parameters
@@ -115,8 +118,12 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True):
         the precision of the table values
     estimator : boolean, default=True
         include the bootstrap estimate in the summary statistics table
-    alpha: boolean, default=True
+    alpha : boolean, default=True
         include the significance level in the summary statistics table
+    save : boolean, default=False
+        indicates if you want to save tables to html files
+    folder_path : str, default = ""
+        specify a path to where tables should be saved.
 
     Returns
     -------
@@ -150,6 +157,15 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True):
         raise TypeError(
             "The estimator and alpha parameters must be of type boolean."
         )
+    if not isinstance(folder_path, str):
+        raise TypeError("The folder_path parameter must be a character string.")
+        
+    if not isinstance(save, bool):
+        raise TypeError("The save parameter must be of type boolean.")  
+        
+    if folder_path != "" :
+         if os.path.isdir(folder_path) is False:
+            raise NameError("The folder path you specified was invalid")
     
     if isinstance(stat, tuple):
         stat = stat[0]
@@ -197,6 +213,9 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True):
         [{"selector": "caption",
           "props": "caption-side: bottom; font-size: 1.00em;"}],
         overwrite=False)
+    
+    if (save == True or folder_path != ""):
+         stats_table.to_html(f"{folder_path}sampling_statistics.html")
 
     # create bootstrapping parameter summary table
     df_bs = pd.DataFrame(
@@ -221,4 +240,7 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True):
         overwrite=False)
     )
 
+    if (save == True or folder_path != ""):
+        bs_params.to_html(f"{folder_path}bootstrap_params.html") 
+        
     return stats_table, bs_params

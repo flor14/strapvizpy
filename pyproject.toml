@@ -11,6 +11,7 @@ python = "^3.9"
 numpy = "^1.22.1"
 pandas = "^1.4.0"
 matplotlib = "^3.5.1"
+dataframe-image = "^0.1.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
