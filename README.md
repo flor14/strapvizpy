@@ -40,7 +40,7 @@ from strappy import bootstrap
 from strappy import display
 ```
 
-## Function Usage
+## Functions
 
 - `bootstrap_distribution`: Returns a sampling distribution of specified replicates is generated for a specified estimator with replacement for a given bootstrap sample size.  
 - `calculate_boot_stats`: Calculates a confidence interval for a given sampling distribution as well as other bootstrapped statistics.  
