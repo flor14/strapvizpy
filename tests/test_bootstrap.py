@@ -4,7 +4,7 @@ import warnings
 import numpy as np
 from pytest import raises
 import pytest
-from strappy.bootstrap import bootstrap_distribution, calculate_boot_stats
+from bootpy.bootstrap import bootstrap_distribution, calculate_boot_stats
 
 
 def test_bootstrap_distribution():
