@@ -203,7 +203,7 @@ def tabulate_stats(stat, precision=2, estimator=True, alpha=True, path=None):
     else:
         stats_table = df.style.format(precision=precision)
 
-    # stats_table = stats_table.hide(axis="index")
+    stats_table = stats_table.hide(axis="index")
 
     # set formatting and caption for table
     stats_table.set_caption(
