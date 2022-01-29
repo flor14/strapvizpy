@@ -111,4 +111,4 @@ def test_plot_ci():
                          ci_level=0.95, 
                          ci_random_seed=123,
                          title="Bootstrap")
-    assert isinstance(histogram, tuple), "Chart was not created correctly"
+    assert histogram.gcf().number > 0, "Chart was not created correctly"
