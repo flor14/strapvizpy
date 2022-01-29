@@ -92,16 +92,16 @@ def test_plot_ci():
         "The value of the argument 'y_axis' must be type of str."
     )
 
-    # tests with invalid input type of save_result_to
+    # tests with invalid input type of path
     with raises(TypeError) as e:
         plot_ci([1, 2, 3, 4, 5, 6, 7], 
                 1000, 
                 n=100, 
                 ci_level=0.95, 
                 y_axis="", 
-                save_result_to=123)
+                path=0.5)
     assert str(e.value) == (
-        "The value of the argument 'save_result_to' must be type of str."
+        "The value of the argument 'path' must be type of str or None."
     )
 
 
