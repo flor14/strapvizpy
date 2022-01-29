@@ -113,7 +113,7 @@ def test_plot_ci():
                          path="./")
     assert histogram.gcf().number > 0, "Chart was not created correctly"
 
-    # tests with invalid input type of path
+    # tests with invalid input value of path
     with raises(NameError) as e:
         plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, path="Users/")
     assert str(e.value) == (
