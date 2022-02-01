@@ -15,7 +15,7 @@ def test_plot_ci():
     None
         The test should pass and no asserts should be displayed.
         
-    9 tests in total
+    10 tests in total
     """
     
     # test integration with calculate_boot_stats function
@@ -115,7 +115,12 @@ def test_plot_ci():
 
     # tests with invalid input value of path
     with raises(NameError) as e:
-        plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, path="Users/")
+        plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, path="Users/", ci_estimator="median")
     assert str(e.value) == (
         "The folder path you specified is invalid."
     )
+
+    # tests with invalid input value of ci_estimator
+    with raises(ValueError) as e:
+        plot_ci([1, 2, 3, 4], 1000, n=100, ci_level=0.95, ci_estimator="outliers")
+    assert str(e.value) == "Supported estimators are mean, median, var, sd"
