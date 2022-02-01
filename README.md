@@ -1,4 +1,5 @@
-# StrapvizPy
+# StrapvizPy 
+
 
 ![example workflow](https://github.com/UBC-MDS/strapvizpy/actions/workflows/ci-cd.yml/badge.svg)
 [![codecov](https://codecov.io/gh/UBC-MDS/strapvizpy/branch/main/graph/badge.svg?token=ufgX4eYuYU)](https://codecov.io/gh/UBC-MDS/strapvizpy)
@@ -56,3 +57,5 @@ Julien Gordon, Gautham Pughazhendhi, Zack Tang, and Margot Vore.
 ## Credits
 
 `StrapvizPy` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
+
+
