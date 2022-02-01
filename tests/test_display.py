@@ -92,14 +92,14 @@ def test_plot_ci():
 
     # tests with invalid input value of path
     with raises(NameError) as e:
-        plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, path="Users/", ci_estimator="median")
+        plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, path="Users/", estimator="median")
     assert str(e.value) == (
         "The folder path you specified is invalid."
     )
 
     # tests with invalid input value of ci_estimator
     with raises(ValueError) as e:
-        plot_ci([1, 2, 3, 4], 1000, n=100, level=0.95, ci_estimator="outliers")
+        plot_ci([1, 2, 3, 4], 1000, n=100, level=0.95, estimator="outliers")
     assert str(e.value) == "Supported estimators are mean, median, var, sd"
 
 
