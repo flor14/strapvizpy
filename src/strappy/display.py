@@ -5,7 +5,7 @@ import pandas as pd
 from strappy.bootstrap import calculate_boot_stats
 
 
-def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
+def plot_ci(sample, rep, bin_size=30, ci_estimator="mean" ,n="auto", ci_level=0.95,
             ci_random_seed=None, title="", x_axis="Bootstrap Sample Mean", 
             y_axis="Count", path=None):
     
@@ -21,6 +21,8 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
     bin_size = int
         a number of bins representing intervals of equal size
         over the range
+    ci_estimator: {"mean", "median", "var", "sd"}
+        sampling distributor's estimator
     n : str or int, default="auto"
         bootstrap sample size, "auto" specifies using the
         same size as the sample
@@ -72,20 +74,24 @@ def plot_ci(sample, rep, bin_size=30, n="auto", ci_level=0.95,
     if path is not None :
         if os.path.isdir(path) is False:
             raise NameError("The folder path you specified is invalid.")
+    
+    if ci_estimator not in {"mean", "median", "var", "sd"}:
+        raise ValueError("Supported estimators are mean, median, var, sd")
 
     sample_stat_dict = calculate_boot_stats(sample, rep, level=ci_level, 
-                                            n=n, random_seed = ci_random_seed,
+                                            n=n, estimator=ci_estimator,
+                                            random_seed = ci_random_seed,
                                             pass_dist=True)
         
     plt.hist(sample_stat_dict[1], density=False, bins=bin_size)
     plt.axvline(sample_stat_dict[0]["lower"], color='k', linestyle='--')
-    plt.axvline(sample_stat_dict[0]["sample_mean"], color='r', linestyle='-')
+    plt.axvline(sample_stat_dict[0]["sample_"+ci_estimator], color='r', linestyle='-')
     plt.axvline(sample_stat_dict[0]["upper"], color='k', linestyle='--')
     axes = plt.gca()
     _, y_max = axes.get_ylim()
-    plt.text(sample_stat_dict[0]["sample_mean"], 
+    plt.text(sample_stat_dict[0]["sample_"+ci_estimator], 
              y_max * 0.9 , 
-             (str(round(sample_stat_dict[0]["sample_mean"], 2))+
+             (str(round(sample_stat_dict[0]["sample_"+ci_estimator], 2))+
               '('+u"\u00B1"+str(round(sample_stat_dict[0]['std_err'],2))+')'), 
              ha='center', va='center',rotation='horizontal', 
              color = "k", bbox={'facecolor':'white', 'pad':5})
