@@ -5,7 +5,7 @@ import pandas as pd
 from strapvizpy.bootstrap import calculate_boot_stats
 
 
-def plot_ci(sample, rep, bin_size=30, ci_estimator="mean" ,n="auto", ci_level=0.95,
+def plot_ci(sample, rep, bin_size=30, ci_estimator="mean", n="auto", ci_level=0.95,
             ci_random_seed=None, title="", x_axis="Bootstrap Sample Mean", 
             y_axis="Count", path=None):
     
