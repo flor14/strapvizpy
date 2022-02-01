@@ -22,6 +22,7 @@ extensions = [
     "sphinx.ext.viewcode",
 ]
 autoapi_dirs = ["../src"]
+jupyter_execute_notebooks = "off"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
