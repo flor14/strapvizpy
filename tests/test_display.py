@@ -85,7 +85,7 @@ def test_plot_ci():
     histogram = plot_ci([1, 2, 3, 4, 5, 6, 7], 1000, 
                          n=100, 
                          level=0.95, 
-                         ci_random_seed=123,
+                         random_seed=123,
                          title="Bootstrap",
                          path="./tests/")
     assert histogram.gcf().number > 0, "Chart was not created correctly"
@@ -97,7 +97,7 @@ def test_plot_ci():
         "The folder path you specified is invalid."
     )
 
-    # tests with invalid input value of ci_estimator
+    # tests with invalid input value of estimator
     with raises(ValueError) as e:
         plot_ci([1, 2, 3, 4], 1000, n=100, level=0.95, estimator="outliers")
     assert str(e.value) == "Supported estimators are mean, median, var, sd"
