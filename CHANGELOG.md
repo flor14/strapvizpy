@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
-## v0.1.0 (11/01/2022)
+## v0.2.1 (2022-01-29)
 
-- First release of `strappy`!
+
+
+## v0.1.0 (29/01/2022)
+
+- First release of `strapvizpy`!
